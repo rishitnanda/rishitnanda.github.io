@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Rishit Nanda</title>
+    <meta name="description" content="Contact Rishit Nanda - Transmission Link for Systems and Interface Design Projects">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Set theme immediately to avoid flash
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
+
+    <!-- Contact page console styles -->
+    <style>
+        /* Cyber console container */
+        .cyber-console {
+            background: var(--console-bg);
+            backdrop-filter: blur(15px);
+            border-top: 2px solid var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding: var(--space-xl);
+            clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+            box-shadow: 0 0 30px var(--console-shadow);
+        }
+
+        /* Terminal-style inputs */
+        .cyber-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--input-border);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+            outline: none;
+            margin-bottom: var(--space-lg);
+            resize: vertical;
+            display: block;
+        }
+
+        .cyber-input:focus {
+            border-bottom: 2px solid var(--accent-color);
+            box-shadow: 0 10px 10px -10px var(--accent-color);
+        }
+
+        .cyber-label {
+            font-family: monospace;
+            color: var(--muted-text);
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* submit button */
+        .cyber-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.1s;
+        }
+
+        .cyber-btn:hover {
+            background: var(--white);
+            color: var(--accent-color);
+            transform: scale(0.98);
+        }
+
+        /* JSON output block */
+        .json-block {
+            background: var(--json-bg);
+            padding: var(--space-md);
+            border-left: 3px solid var(--accent-color);
+            font-family: monospace;
+            color: var(--json-string);
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .json-key { color: var(--json-key); }
+        .json-string { color: var(--json-string); }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="hud hud-left">SYS.ID // 4099<br>NODE: ROOT</div>
+    <div class="hud hud-right">STATUS // SECURE<br>_minimalist (to be replaced by script.js)_</div>
+
+    <header>
+        <div id="progress-container"><div id="progress-bar"></div></div>
+    
+        <nav class="glass-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <div class="switch-group">
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" id="motion-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Form section -->
+    <main class="container modular-grid">
+
+        <!-- Left column: Contact form inside the cyber console panel -->
+        <section class="hero-main scroll-animate floating-element">
+            <h1 style="margin-bottom: 2rem;">TRANSMISSION_LINK</h1>
+            <div class="cyber-console">
+                <!-- Contact form with custom validation hints -->
+                <form id="contact-form" novalidate>
+                    <div>
+                        <label class="cyber-label">> IDENTIFICATION [NAME]</label>
+                        <input type="text" id="name" class="cyber-input" required minlength="4" placeholder="_">
+                    </div>
+
+                    <div>
+                        <label class="cyber-label">> SECURE_CHANNEL [EMAIL]</label>
+                        <input type="email" id="email" class="cyber-input" required placeholder="_">
+                    </div>
+
+                    <div>
+                        <label class="cyber-label">> PACKET_PAYLOAD [MESSAGE]</label>
+                        <textarea id="message" class="cyber-input" rows="4" required minlength="3"
+                            placeholder="_"></textarea>
+                    </div>
+
+                    <button type="submit" class="cyber-btn">[ INITIATE_TRANSMISSION ]</button>
+                    <span class="error-msg" style="display: none; color: var(--error-color); margin-top: 10px;">> ERR:
+                        INVALID_PAYLOAD</span>
+                </form>
+
+                <!-- Success state -->
+                <div id="form-success"
+                    style="display: none; text-align: center; color: var(--success-color); font-family: monospace; padding: 2rem 0;">
+                    <h2>> TRANSMISSION_SUCCESSFUL</h2>
+                    <p>Packet delivered to root node.</p>
+                    <br>
+                    <button class="cyber-btn" onclick="location.reload()"
+                        style="background: transparent; border: 1px solid var(--success-color); color: var(--success-color);">REBOOT_LINK</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right column: JSON-styled contact info sidebar -->
+        <aside class="hero-side scroll-animate floating-element" style="animation-duration: 8s;">
+            <div style="margin-top: 4rem;">
+                <span class="project-tag" style="margin-bottom: 1rem;">> NODE_INFO.JSON</span>
+                <pre class="json-block">{
+  <span class="json-key">"id"</span>: <span class="json-string">"Rishit_Nanda"</span>,
+  <span class="json-key">"status"</span>: <span class="json-string">"ONLINE"</span>,
+  <span class="json-key">"location"</span>: {
+    <span class="json-key">"institute"</span>: <span class="json-string">"IIIT Hyderabad"</span>,
+    <span class="json-key">"region"</span>: <span class="json-string">"Gachibowli"</span>
+  },
+  <span class="json-key">"connections"</span>: {
+    <span class="json-key">"github"</span>: <a href="https://github.com/rishitnanda" target="_blank" style="color:var(--accent-color)">"github.com/rishitnanda"</a>,
+    <span class="json-key">"linkedin"</span>: <a href="https://www.linkedin.com/in/rishit-nanda-220272377/" target="_blank" style="color:var(--accent-color)">"linkedin.com/in/rishit-nanda-220272377/"</a>
+  }
+}</pre>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Load scripts -->
+    <script src="script.js"></script>
+    <script type="module">
+        import { ReadingProgress } from './progress.js';
+        new ReadingProgress('progress-bar');
+    </script>
+</body>
+</html>

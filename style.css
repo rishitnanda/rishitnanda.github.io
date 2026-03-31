@@ -1,0 +1,1302 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+/* Primary font for headers; excludes digits */
+@font-face {
+    font-family: 'Flashstrike';
+    src: url('font_display.ttf') format('truetype');
+    unicode-range: U+0000-002F, U+003A-10FFFF;
+}
+
+/* Body font for contrast */
+@font-face {
+    font-family: 'Handmade';
+    src: url('font_body.otf') format('opentype');
+}
+
+
+/* Light Mode Variables */
+:root {
+    /* Core palette */
+    --bg-color: #FDFBF7;
+    --text-color: #1A1A1A;
+    --accent-color: #6A1B9A;
+
+    /* Glass surfaces need partial transparency */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(0, 0, 0, 0.15);
+
+    --grid-color: rgba(106, 27, 154, 0.12);
+    --grid-subtle: rgba(106, 27, 154, 0.04);
+
+    /* Font stacks: display falls through Flashstrike > Fira Code > system */
+    --font-display: 'Flashstrike', 'Fira Code', sans-serif;
+    --font-body: 'Handmade', serif;
+
+    --modal-overlay: rgba(255, 255, 255, 0.4);
+
+    /* text sizing */
+    --text-sm: 0.8rem;
+    --text-base: 1rem;
+    --text-lg: 1.15rem;
+    --text-xl: 1.35rem;
+    --text-2xl: 1.85rem;
+    --text-3xl: 2.5rem;
+
+    /* margins and padding */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 0.85rem;
+    --space-lg: 1.5rem;
+    --space-xl: 3rem;
+
+    /* for hover highlights and box-shadow effects */
+    --glow-color: rgba(106, 27, 154, 0.08);
+
+    --white: #ffffff;
+    --black: #000000;
+    --error-color: #ff4d4d;
+    --success-color: #00ff00;
+    --warning-color: #ffcc00;
+
+    /* Muted text for secondary information and labels */
+    --muted-text: rgba(26, 26, 26, 0.6);
+    --input-border: rgba(0, 0, 0, 0.2);
+
+    --console-bg: rgba(255, 255, 255, 0.85);
+    --console-shadow: rgba(0, 0, 0, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --panel-inner-glow: rgba(255, 255, 255, 0.05);
+
+    /* background blobs which move slowly (line 274) */
+    --blob-1: rgba(106, 27, 154, 0.3);
+    --blob-2: rgba(41, 121, 255, 0.2);
+
+    /* JSON display block styling for the contact page sidebar */
+    --json-bg: rgba(0, 0, 0, 0.06);
+    --json-key: #f92672;
+    --json-string: #e6db74;
+
+    /* shadows: soft for nav, medium for panels, strong for timeline hover images and others */
+    --shadow-soft: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(0, 0, 0, 0.2);
+    --shadow-strong: rgba(0, 0, 0, 0.8);
+
+    /* toggle buttons and other soft color requirements (moon shadow as earlier it had sun-moon icons) */
+    --moon-shadow: #D1C4E9;
+
+    /* spring effect of modals */
+    --transition-main: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* rounded corners */
+    --radius: 12px;
+}
+
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --bg-color: #000000;
+    --text-color: #F5F5F5;
+    --accent-color: #d1c4e9;
+    --glass-bg: rgba(18, 18, 18, 0.8);
+    --border-color: rgba(255, 255, 255, 0.15);
+    --grid-color: rgba(209, 196, 233, 0.15);
+    --grid-subtle: rgba(209, 196, 233, 0.05);
+    --glow-color: rgba(209, 196, 233, 0.08);
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --muted-text: rgba(255, 255, 255, 0.6);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --console-bg: rgba(10, 10, 15, 0.85);
+    --console-shadow: rgba(0, 0, 0, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --panel-inner-glow: rgba(255, 255, 255, 0.05);
+    --json-bg: rgba(0, 0, 0, 0.6);
+}
+
+
+/* Base Reset and Body (more explanation in README) */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    margin: 0;
+    line-height: 1.6;
+
+    /* prevent horizontal scroll bar in any case */
+    overflow-x: hidden;
+
+    background-image:
+        radial-gradient(circle at 15% 50%, var(--glow-color), transparent 25%),
+        radial-gradient(circle at 85% 30%, var(--glow-color), transparent 25%),
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+
+    /* ensure background doesn't move on scrolling */
+    background-attachment: fixed;
+
+    /* switching between themese shouldn't be spontaneous */
+    transition: background-color 0.5s ease;
+}
+
+h1,
+h2,
+h3,
+.filter-btn {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-md);
+}
+
+h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-md);
+}
+
+h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-sm);
+}
+
+
+/* Navigation Bar */
+
+/* tells browser that header should be stuck to the top of screen */
+body>header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* holds the links to other pages */
+nav {
+    margin: var(--space-md) auto;
+    width: 90%;
+    max-width: 1200px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    padding: 0.8rem var(--space-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 30px var(--shadow-soft);
+}
+
+/* decides how the links are arranged */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: var(--space-lg);
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* styling of the link text */
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: var(--text-base);
+    transition: var(--transition-main);
+}
+
+/* Active and hover states use accent color and glow */
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--accent-color);
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+
+/* Project Filters */
+.filter-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.filter-btn {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    padding: var(--space-sm) 1.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--text-base);
+    transition: var(--transition-main);
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+/* centers content and handles spacing for every page */
+
+.container {
+    /* ensure that content doesn't stretch too wide on big monitors */
+    max-width: 1200px;
+    /* center the container */
+    margin: 0 auto;
+    /* responsive horizontal padding, ensure that content doesn't touch edge of small screens */
+    padding: var(--space-xl) 5% var(--space-xl);
+}
+
+/* specific issue on contact page, more top padding was required */
+body:has(#contact-form) .container {
+    padding-top: 4rem;
+}
+
+
+/* HUD (Heads Up Display) side text */
+.hud {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    color: var(--accent-color);
+    letter-spacing: 4px;
+    opacity: 0.6;
+    z-index: 1000;
+    pointer-events: none;
+    writing-mode: vertical-rl;
+}
+
+.hud-left {
+    left: 2%;
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.hud-right {
+    right: 2%;
+}
+
+
+/* Blob movement logic */
+.blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(150px);
+    z-index: -2;
+    opacity: 0.5;
+    animation: driftBlob 30s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blob-1 {
+    width: 600px;
+    height: 600px;
+    background: var(--blob-1);
+    top: -10%;
+    left: -10%;
+}
+
+.blob-2 {
+    width: 800px;
+    height: 800px;
+    background: var(--blob-2);
+    bottom: -20%;
+    right: -10%;
+    animation-delay: -15s;
+}
+
+/* defines that in 30 seconds it moves by 100px to right and 50 px down which is its 100% */
+@keyframes driftBlob {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(100px, 50px) scale(1.2);
+    }
+}
+
+
+/* Put the index page content of centre of screen */
+
+.hero-container {
+    /* vh is percentage of browser height */
+    min-height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: var(--space-lg);
+    overflow: hidden;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 40px var(--shadow-medium), inset 0 0 20px var(--panel-inner-glow);
+    border-radius: var(--radius);
+    padding: var(--space-xl);
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    z-index: 10;
+}
+
+.social-links-hero {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+}
+
+.social-links-hero a {
+    color: var(--text-color);
+    transition: var(--transition-main);
+    display: inline-block;
+}
+
+.social-links-hero a:hover {
+    color: var(--accent-color);
+}
+
+/* Breathing effect of main panel on index page. Cubic bezier (ease-in-out) defines the rhythm, or how, i.e. start slow, get fast in middle, then end slow.*/
+.floating-element {
+    animation: gentleFloat 10s infinite ease-in-out;
+}
+
+@keyframes gentleFloat {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+
+/* Project Grid and Cards */
+.projects-grid {
+    display: grid;
+
+    /* it automatically calculates how many cards can fit in a row based on the screen width */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+
+    /* space between cards */
+    gap: var(--space-lg);
+
+    width: 100%;
+    justify-content: start;
+    align-items: start;
+}
+
+.project-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-main);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* vertical accent bar on the left of the card */
+.project-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent-color);
+    transform: scaleY(0);
+    transition: var(--transition-main);
+}
+
+.project-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 30px var(--glow-color);
+}
+
+/* vertical accent bar is disabled normally, but scaleY(1) opens it to full length on hovering */
+.project-card:hover::before {
+    transform: scaleY(1);
+}
+
+/* small labels over every project */
+.project-tag {
+    font-size: var(--text-sm);
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-bottom: var(--space-md);
+    display: block;
+    letter-spacing: 1px;
+}
+
+
+/* blinking of cursor, at half time it disappears then at 1s, it appears and so on */
+.typewriter-cursor {
+    animation: blink 1s step-end infinite;
+    color: var(--accent-color);
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Hero Entrance Animation */
+.hero-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.delay-1 {
+    animation-delay: 0.1s;
+}
+
+.delay-2 {
+    animation-delay: 0.3s;
+}
+
+.delay-3 {
+    animation-delay: 0.5s;
+}
+
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* reveal on scroll */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(40px) skewY(1deg);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-animate.in-view {
+    opacity: 1;
+    transform: translateY(0) skewY(0deg);
+}
+
+
+/* Toggle Switches */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--white);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--accent-color);
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+
+/* Progress Bar */
+#progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 2000;
+}
+
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent-color);
+    transition: width 0.1s;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: -400px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--accent-color);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius);
+    z-index: 9999;
+    box-shadow: 0 10px 30px var(--glow-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-notification.show {
+    right: var(--space-lg);
+}
+
+.toast-buttons {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+}
+
+.toast-btn {
+    padding: var(--space-xs) var(--space-sm);
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: var(--text-sm);
+    transition: var(--transition-main);
+}
+
+.toast-btn:hover {
+    background: var(--accent-color);
+    color: var(--white);
+}
+
+
+/* Reduced Motion: 0.01ms of animation/transition duration isn't visible to eye */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .scroll-animate {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* Reduced Motion Toggle (Sync with status indicator) */
+body.reduced-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+body.reduced-motion .scroll-animate {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+
+/* Mobile & Tablet Breakpoints (uptil 1023px, consider mobile layout) Note: !important means if conflicting rules, follow the !important rule with highest priority; ! doesn't mean not here */
+@media (max-width: 1023px) {
+    .modular-grid {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+        padding-bottom: 4rem;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        border-radius: 20px;
+        gap: 10px;
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        font-size: 0.9rem;
+    }
+
+    /* Center switches on mobile */
+    .switch-group {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hud {
+        display: none !important;
+    }
+
+    body:has(form) {
+        overflow-y: auto !important;
+    }
+
+    body:has(form) .container {
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    body:has(#hero-node) {
+        overflow: hidden !important;
+        height: 100dvh;
+    }
+
+    body:has(#hero-node) .container {
+        height: auto !important;
+        display: flex;
+        justify-content: center;
+        padding-top: 5rem !important;
+    }
+
+
+    .container {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+    }
+
+    /* About page layout adjustments */
+    /* Reduced spacing around profile photo */
+    #about-side-img {
+        order: 1;
+        padding-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    #about-side-img .about-image {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #about-main-text {
+        order: 2;
+        margin-top: 0.5rem;
+    }
+
+    .timeline-section {
+        order: 3;
+    }
+
+    /* Shrink profile image and heading on mobile so 30-40% of body text is visible above the fold without scrolling */
+    #about-side-img .about-image img {
+        max-width: 180px !important;
+    }
+
+    #about-main-text h1 {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    #about-main-text p {
+        font-size: 0.9rem;
+    }
+
+    /* Disable timeline hover on mobile */
+    .timeline-item:hover {
+        transform: none !important;
+    }
+
+    /* Timeline images shown inside expanded cards on mobile */
+    .timeline-inline-img {
+        width: 100%;
+        max-width: 280px;
+        margin-top: 0.8rem;
+        border: 2px solid var(--accent-color);
+        border-radius: var(--radius);
+        display: block;
+    }
+
+    /* Project modal adjustments */
+    .modal-content {
+        height: auto !important;
+        max-height: 90vh !important;
+        min-height: unset !important;
+        overflow-y: auto !important;
+        padding: 1rem !important;
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+        overflow-y: visible !important;
+        padding-right: 0 !important;
+    }
+
+    #close-modal {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    /* Center hero panel on mobile */
+    body:has(#hero-node) .container {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        min-height: 85vh !important;
+        padding: var(--space-md) !important;
+    }
+
+    .hero-container {
+        min-height: unset !important;
+        width: 100% !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: visible !important;
+    }
+
+    .glass-panel {
+        padding: var(--space-lg) !important;
+        max-width: 90% !important;
+        margin: 0 auto !important;
+    }
+
+    /* Prevent heading overflow with fluid scaling */
+    h1,
+    h2 {
+        word-break: break-all;
+        /* Allow breaking of long single-word identifiers */
+        overflow-wrap: break-word;
+        font-size: clamp(1.2rem, 7vw, 2.0rem);
+        line-height: 1.1;
+    }
+
+    /* Wrap filter buttons */
+    .filter-controls {
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        font-size: var(--text-sm);
+        padding: var(--space-xs) var(--space-md);
+    }
+
+    /* Contact page adjustments (not mentioned in contact.html, reasoning in README) */
+    .cyber-console {
+        clip-path: none !important;
+        padding: var(--space-lg) var(--space-md) !important;
+    }
+
+    .cyber-input {
+        font-size: 0.95rem !important;
+        padding: 8px 0 !important;
+        margin-bottom: var(--space-md) !important;
+    }
+
+    .cyber-input[rows] {
+        min-height: 60px !important;
+    }
+
+    .cyber-btn {
+        font-size: 0.9rem !important;
+        letter-spacing: 1px !important;
+        padding: 0.8rem !important;
+        clip-path: none !important;
+    }
+
+    /* success message wrapped */
+    #form-success h2 {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        font-size: var(--text-xl);
+    }
+}
+
+/* Desktop (>=1024px): asymmetric 2-column grid*/
+@media (min-width: 1024px) {
+    .modular-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        grid-auto-rows: auto;
+        gap: 3rem;
+    }
+
+    .hero-main {
+        grid-column: 1;
+    }
+
+    .hero-side {
+        grid-column: 2;
+    }
+}
+
+
+/* D3: Magnetic button micro interaction (inspiration mentioned in README)*/
+.magnetic-btn,
+.nav-links a {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+input,
+textarea {
+    background: var(--glass-bg);
+    border: 2px solid var(--border-color);
+    padding: var(--space-md);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    transition: var(--transition-main);
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px var(--glow-color);
+    background: var(--bg-color);
+}
+
+
+/* Form Validation */
+.error-msg {
+    color: var(--error-color);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+/* shaking invalid fields */
+.was-validated input:invalid,
+.was-validated textarea:invalid {
+    display: block;
+    animation: shake 0.4s ease-in-out;
+}
+
+.was-validated input:invalid+.error-msg,
+.was-validated textarea:invalid+.error-msg {
+    display: block;
+}
+
+/* Shake animation for invalid elements */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+
+/* Collapsible Timeline */
+.timeline-list {
+    position: relative;
+    list-style: none;
+    padding: 2rem 0;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+/* Vertical data line running behind all timeline entries */
+.timeline-list::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 20px;
+    width: 5px;
+    height: 95.4%;
+    background: var(--border-color);
+    z-index: 1;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-left: 55px;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Circular node dot positioned on the vertical line */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    border: 2px solid var(--accent-color);
+    z-index: 2;
+    transition: var(--transition-main);
+}
+
+/* Hover state pulls the item forward and fills the dot with accent color */
+.timeline-item:hover {
+    transform: scale(1.03) translateX(10px);
+}
+
+.timeline-item:hover::after {
+    background: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+.timeline-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: var(--transition-main);
+}
+
+.timeline-item:hover .timeline-card {
+    border-color: var(--accent-color);
+    box-shadow: var(--card-shadow);
+}
+
+/* Timeline content expansion transition for phones */
+/* closed state of timeline modal */
+.timeline-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+}
+
+/* opened state */
+.timeline-item[aria-expanded="true"] .timeline-content {
+    max-height: 500px;
+    opacity: 1;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 1rem;
+}
+
+
+/* Project Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-overlay);
+    backdrop-filter: blur(12px) saturate(180%);
+    z-index: 5000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.modal-content {
+    max-width: 800px;
+    width: 100%;
+    height: 75vh;
+    max-height: 800px;
+    min-height: 600px;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 2px solid var(--accent-color) !important;
+    padding: 1.5rem !important;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+}
+
+#close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.4rem 0.8rem;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    text-align: left;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 15px;
+}
+
+.modal-grid h4 {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Close button starts at 70% opacity and fills on hover */
+.modal-close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.modal-close-btn:hover {
+    opacity: 1;
+    background: var(--accent-color);
+    color: var(--white);
+    box-shadow: 0 0 15px var(--accent-color);
+    transform: scale(1.05);
+}
+
+
+/* larger project modal (which comes on click) becomes visible */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* larger project modal (which comes on click) zoom into final size */
+@keyframes modalContentZoom {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+        filter: blur(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+}
+
+
+/* About Page */
+.about-image {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+
+.status-indicator {
+    font-family: monospace;
+    color: var(--accent-color);
+    display: block;
+    margin-top: 1rem;
+    transition: var(--transition-main);
+    cursor: default;
+}
+
+/* after is generally used if there is some text inside the original component but since there is not, this element appears as the only content in that component */
+.status-indicator::after {
+    content: "STATUS: ACTIVE";
+}
+
+.status-indicator:hover::after {
+    content: "STATUS: SINGLE";
+    text-shadow: 0 0 10px var(--accent-color);
+}
+
+
+/* Hero modal sizing */
+.hero h1.hero-animate {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .hero h1.hero-animate {
+        font-size: 3rem;
+    }
+}
+
+
+@media (min-width: 769px) {
+
+    /* If page contains hero-node that is the home page */
+    body:has(#hero-node) {
+        overflow: hidden;
+        /* disable scrolling */
+    }
+
+    body:has(#hero-node) .container {
+        height: calc(100vh - 160px);
+        /* centrally align the glass panel */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    body:has(#hero-node) #hero-node {
+        min-height: unset !important;
+    }
+}
+
+/* Project grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+}
+
+@media (min-width: 1200px) {
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: minmax(220px, auto);
+    }
+}
+
+/* Contact page lock */
+@media (min-width: 769px) {
+    body:has(form) {
+        overflow: hidden;
+    }
+
+    body:has(form) .container {
+        height: calc(100vh - 160px);
+        display: flex;
+        align-items: center;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+body:has(form) .modular-grid {
+    margin-top: 0;
+}
+
+
+/* Nav Toggles */
+.switch-group {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+
+
+/* Timeline Card Height */
+.timeline-card {
+    /* prevents cards from looking tiny if they only have one line of text */
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+/* Timeline Hover Image */
+#timeline-hover-display {
+    /* locks the image display to the right side of the browser window for large devices */
+    position: fixed;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+#timeline-img {
+    max-width: 350px;
+    border: 2px solid var(--accent-color);
+    border-radius: var(--radius);
+    box-shadow: 0 0 30px var(--shadow-strong);
+    display: block;
+}
+
+/* turns off the side-bar images for small devices and makes room for inline expansion */
+@media (max-width: 1023px) {
+    #timeline-hover-display {
+        display: none !important;
+    }
+}

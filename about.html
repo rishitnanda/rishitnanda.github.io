@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Rishit Nanda</title>
+    <meta name="description" content="About Rishit Nanda - Systems and Interface Design Portfolio">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Set theme immediately to avoid flash
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="hud hud-left">SYS.ID // 4099<br>NODE: ROOT</div>
+    <div class="hud hud-right">STATUS // SECURE<br>_minimalist (to be replaced by script.js)_</div>
+
+    <header>
+        <div id="progress-container"><div id="progress-bar"></div></div>
+
+        <nav class="glass-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="switch-group">
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" id="motion-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container modular-grid">
+
+        <section id="about-main-text" class="hero-main scroll-animate">
+            <h1 class="hero-animate delay-1" style="font-size: 3rem; margin-bottom: 1rem;">ABOUT_ME</h1>
+            <p>
+                Give me a complex conceptual problem, a messy process to automate with Python, or an event to run, and I'm in my element. I love figuring out the underlying logic of how things work—whether that's diving into the math and structure behind a system or writing clean scripts to make everyday tasks run efficiently. For me, coding is less about the syntax and more about the satisfaction of building something that just works.
+            </p>
+            <p>
+                But I don't just live behind a screen. I actually really enjoy managing people and organizing events. There's a completely different kind of problem-solving involved in getting a team on the same page and making an event actually happen in the real world. I love the fast pace of it and the challenge of pulling all the moving parts together into a successful experience.
+            </p>
+            <p>
+                When I'm offline, I'm usually keeping my reflexes sharp playing badminton or letting loose through dance. I'm also a massive fan of horror and supernatural movies—if it has a gripping plot, a heavy atmosphere, and a solid jump scare, I'm watching it. And when I just need to completely unwind, I'm probably catching up on the latest arc of One Piece.
+            </p>
+        </section>
+
+        <aside id="about-side-img" class="hero-side scroll-animate" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 2rem;">
+            <div class="about-image floating-element">
+                <img src="images/pfp.jpg" alt="Rishit Nanda" id="pfp" style="max-width: 320px; border: 2px solid var(--text-color); padding: 5px; background: var(--bg-color); object-fit: cover;">
+                <br>
+                <small class="status-indicator"></small>
+            </div>
+        </aside>
+
+        <!-- Collapsible Timeline Section -->
+        <section class="timeline-section scroll-animate">
+            <h2 class="section-title">SYSTEM_TIMELINE</h2>
+            <ul class="timeline-list">
+                <li class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="tag">Class 6</span>
+                        <h3>First Steps in Web</h3>
+                        <p>Started learning HTML and CSS at my alma mater, Vishwa Bharati Public School, Noida. This laid the fundamental visual groundwork for my interest in web technologies and user interfaces. I spent countless hours tweaking layouts and color schemes, discovering the immediate visual feedback loop of front-end development.</p>
+                        <div class="timeline-content"></div>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="tag">Class 9</span>
+                        <h3>Learning Python</h3>
+                        <p>Began programming in Python at the same school, sparking a deeper interest in logic and computing. Python's clean syntax allowed me to transition from pure visual design to procedural logic, culminating in small automation scripts and text-based tools.</p>
+                        <div class="timeline-content"></div>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="tag">Class 11</span>
+                        <h3>Building Applications</h3>
+                        <p>Started building apps using Tkinter, Pygame, HTML, CSS, and JSX for the first time. This era marked a definitive shift from writing simple terminal scripts to engineering fully-fledged graphical user interfaces and complex game logic loops.</p>
+                        <div class="timeline-content"></div>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="tag">Class 12</span>
+                        <h3>Modern Web Dev</h3>
+                        <p>Learnt the basics of TypeScript, adding standard strict typing to my web tools. The introduction of static typing taught me the immense value of scalable architecture and catching critical runtime errors at compile time.</p>
+                        <div class="timeline-content"></div>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="tag">July 2025</span>
+                        <h3>IIIT Hyderabad</h3>
+                        <p>Secured admission into the Computer Science and Engineering (CSD) branch at IIIT Hyderabad through the highly competitive UGEE examination. This pivotal moment marked the beginning of my formal computer science education at a premier institute.</p>
+                        <div class="timeline-content"></div>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="tag">Dec 2025</span>
+                        <h3>Semester 1 Completed</h3>
+                        <p>Finished my first semester at IIITH with a keen interest heavily leaning toward Digital Systems, Computer Architecture, and Microcontrollers. Gained critical hands-on experience in low-level hardware resource management.</p>
+                        <div class="timeline-content"></div>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="tag">CURRENT</span>
+                        <h3>Semester 2 & Beyond</h3>
+                        <p>Ongoing: Semester 2. Actively expanding my low-level engineering skills, focusing on modular C programming, Linux system internals, memory safety, and automated workflow pipelines.</p>
+                        <div class="timeline-content"></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Timeline image display (desktop only) -->
+    <div id="timeline-hover-display">
+        <img id="timeline-img" src="">
+    </div>
+
+    <!-- Load scripts -->
+    <script src="script.js"></script>
+    <script type="module">
+        import { ReadingProgress } from './progress.js';
+        new ReadingProgress('progress-bar');
+    </script>
+</body>
+</html>
