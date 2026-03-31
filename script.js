@@ -255,7 +255,7 @@ if (projectModalWindow && projectModalCloseBtn) {
 
 
 // Timeline image hover display
-const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+const isMobile = () => window.matchMedia('(max-width: 1023px)').matches;
 
 document.querySelectorAll('.timeline-card').forEach((card, index) => {
     card.addEventListener('mouseenter', () => {

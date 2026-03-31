@@ -1288,6 +1288,8 @@ body:has(form) .modular-grid {
 
 #timeline-img {
     max-width: 350px;
+    max-height: 75vh;
+    object-fit: cover;
     border: 2px solid var(--accent-color);
     border-radius: var(--radius);
     box-shadow: 0 0 30px var(--shadow-strong);
