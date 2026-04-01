@@ -73,7 +73,7 @@
     --blob-2: rgba(41, 121, 255, 0.2);
 
     /* JSON display block styling for the contact page sidebar */
-    --json-bg: rgba(0, 0, 0, 0.06);
+    --json-bg: rgba(255, 255, 255, 0.85);
     --json-key: #f92672;
     --json-string: #e6db74;
 

@@ -44,7 +44,7 @@ Below-the-fold content starts invisible with a slight downward offset and a 1-de
 Navigation links and buttons use `cubic-bezier(0.175, 0.885, 0.32, 1.275)` — a curve where the second control point exceeds 1.0, creating a spring-like "bounce back" effect. This specific easing suits buttons because it feels like physical elasticity and responsiveness. When you move your mouse over a nav link, it follows your cursor with a magnetic pull (30% of the offset distance), then springs back to center when you leave. The bounce-back curve makes this feel tactile rather than mechanical.
 
 ### 4. Reduced Motion Handling
-The `@media (prefers-reduced-motion: reduce)` query respects the user's OS-level accessibility setting. When enabled, it forces all animation and transition durations to near-zero (0.01ms, not 0, so animation-end events still run). There's also a manual toggle in the nav bar that applies the same rules via a CSS class, giving users control even if their OS setting is off. Both approaches are commented directly in the CSS explaining what they do and why.
+The `@media (prefers-reduced-motion: reduce)` query respects the user's OS-level accessibility setting. When enabled, it forces all animation and transition durations to near-zero (0.01ms, not 0, so animation-end events still run). There's also a manual toggle in the nav bar that applies the same rules via a CSS class, giving users control even if their OS setting is off. Both approaches are commented directly in the CSS explaining what they do and why. (Note: This feature has been mentioned as Minimalist mode several times throughout my site and code.)
 
 ---
 
