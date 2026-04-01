@@ -15,6 +15,31 @@ if (themeToggle) {
 
 const timelineList = document.querySelector('.timeline-list');
 
+// Generic 3D Tilt Effect
+function applyTilt(elements, perspective = 1000, intensity = 8, scale = 1) {
+    const targets = (elements instanceof NodeList || Array.isArray(elements)) ? elements : [elements];
+    targets.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -intensity;
+            const rotateY = ((x - centerX) / centerX) * intensity;
+
+            el.style.transform = `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+            el.style.transition = 'transform 0.1s ease-out';
+        });
+
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale(1)`;
+            el.style.transition = 'var(--transition-main)';
+        });
+    });
+}
+
 // Use event delegation for timeline expansion
 if (timelineList) {
     timelineList.addEventListener('click', (event) => {
@@ -110,7 +135,7 @@ if (tagFilterButtons.length > 0) {
 
     renderFilters();
 
-    // Sync filters with browser history
+    // Sync filters with browser history, without this if u put filters on projects and press browser back and forward buttons, the filter selection would stay same but url would be changing
     window.addEventListener('popstate', () => {
         const historyParams = new URLSearchParams(window.location.search);
         activeFilters = historyParams.get('tags') ? historyParams.get('tags').split(',') : ['all'];
@@ -118,7 +143,7 @@ if (tagFilterButtons.length > 0) {
     });
 }
 
-
+// contact form on contact page
 const contactFormNode = document.getElementById('contact-form');
 
 if (contactFormNode) {
@@ -175,7 +200,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.scroll-animate, .timeline-item').forEach(node => observer.observe(node));
 
-
+// picking data from small project card's attributes and printing them in the larg card mode
 const projectModalWindow = document.getElementById('project-modal');
 const projectModalCloseBtn = document.getElementById('close-modal');
 
@@ -197,27 +222,11 @@ if (projectModalWindow && projectModalCloseBtn) {
             projectModalWindow.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
-
-        // Tilt effect on mouse move
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-            card.style.transition = 'transform 0.1s ease-out';
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
-            card.style.transition = 'var(--transition-main)';
-        });
     });
+
+    // Apply tilt to cards and modal
+    applyTilt(projectCards, 1000, 8, 1.02);
+    applyTilt(document.querySelectorAll('.modal-content'), 2000, 10, 1);
 
     projectModalCloseBtn.addEventListener('click', () => {
         projectModalWindow.style.display = 'none';
@@ -229,27 +238,6 @@ if (projectModalWindow && projectModalCloseBtn) {
             projectModalWindow.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
-    });
-
-    // Modal tilt effect
-    document.querySelectorAll('.modal-content').forEach(modal => {
-        modal.addEventListener('mousemove', (e) => {
-            const rect = modal.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 80;
-            const rotateY = (centerX - x) / 80;
-
-            modal.style.transform = `perspective(2000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            modal.style.transition = 'transform 0.1s ease-out';
-        });
-
-        modal.addEventListener('mouseleave', () => {
-            modal.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg)`;
-            modal.style.transition = 'var(--transition-main)';
-        });
     });
 }
 
