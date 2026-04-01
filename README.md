@@ -52,23 +52,23 @@ The `@media (prefers-reduced-motion: reduce)` query respects the user's OS-level
 
 I chose to do all 4 features as they were all very interesting and elevated the site's functionality and user experience.
 
-### <u>Group A Features</u>
+### Group A Features
 
-#### <u>A1 — Filterable & Bookmarkable Project Index</u>
+#### A1 — Filterable & Bookmarkable Project Index
 
 The Projects page lets you filter cards by technology tags (Python, Games, UI/UX, C/C++). You can select multiple tags at once, and the current filter state gets written into the URL as a query string like `?tags=python,games` using the History API. This means if you share that URL with someone, they'll see the exact same filtered view.
 
 The tricky part was the toggle logic. Clicking "Python" when "All" is active needs to deactivate "All" and activate "Python." Clicking "Python" again when it's the only active filter needs to reset back to "All." And the browser's back button needs to undo filter changes. I handle this with a `popstate` listener that re-reads the URL parameters and re-renders. The cards fade out with a CSS opacity transition, then get `display: none` after 400ms. When they come back, I set `display: flex` first, wait 10ms, then set opacity, that tiny delay is essential because without it the browser batches both changes and skips the transition entirely.
 
-#### <u>A2 — Session-Persistent Reading Progress</u>
+#### A2 — Session-Persistent Reading Progress
 
 The About page has a thin progress bar at the top that tracks how far you've scrolled. But the important part is persistence: it saves your exact scroll position to `sessionStorage` on every scroll event. If you refresh the page or navigate away and come back, a toast notification shows up from the right asking if you want to resume where you left off.
 
 I wrote this as `export class ReadingProgress` in its own file (`progress.js`) to keep it isolated from the main script. The toast notification is created entirely in JavaScript, it doesn't exist in the HTML at all, because it should only appear conditionally. The slide-in animation uses a CSS `right` property transition with a cubic-bezier curve that gives it an elastic "pop-in" feel.
 
-### <u>Group B Features</u>
+### Group B Features
 
-#### <u>B1 — Typed-Text Component</u>
+#### B1 — Typed-Text Component
 
 The hero section on the home page has a typewriter effect that cycles through phrases like `> Initializing System_Daemon()`. It's built as a manual state machine tracking a phrase index, character index, a character stack array, and boolean flags for deleting vs. typing vs. waiting.
 
@@ -76,7 +76,7 @@ The cycle goes: type each character forward (randomized 70-120ms per keystroke f
 
 The blinking cursor is purely CSS — a `@keyframes blink` animation using `step-end` timing. I could have done it in JS, but CSS keeps the cursor blinking at 60fps without any JavaScript execution cost.
 
-#### <u>B2 — Collapsible Timeline with Event Delegation</u>
+#### B2 — Collapsible Timeline with Event Delegation
 
 The About page timeline is built as a single `<ul>` with `<li>` items. Instead of binding a click handler to every single list item (which would be 7 separate listeners), I bound exactly one listener to the parent `<ul>`. When any child is clicked, the event bubbles up, and I use `e.target.closest('.timeline-item')` to figure out which item was actually tapped.
 
@@ -99,7 +99,7 @@ The expand/collapse animation uses the `max-height` CSS transition technique. Th
 - **The "Why"**: This creates a single "Control Center" for the site's mobile experience. It prevents "Specificity Wars" between files and allows us to use **`!important`** in the global stylesheet to consistently override local desktop styles across the entire mobile site.
 
 ### Unified Breakpoint Synchronization (Bug Fix)
-- **Problem (768px-1023px Bug)**: Previously, a "dead zone" existed at 768px-1023px. CSS thought it was mobile (hiding the hover sidebar), but JS thought it was desktop (failing to inject inline images).
+- **Problem (Bug)**: Previously, a "dead zone" existed at . CSS thought it was mobile (hiding the hover sidebar), but JS thought it was desktop (failing to inject inline images).
 - **Solution**: Synchronized all breakpoints (CSS and JS) to **1023px**. 
 - **Structural Fix**: Redesigned the About page timeline to wrap descriptions in `.timeline-content`. This enables the CSS `max-height` transition and provides a dedicated container for injected inline images on mobile/tablet devices.
 
