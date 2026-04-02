@@ -224,6 +224,12 @@ nav {
     text-shadow: 0 0 8px var(--glow-color);
 }
 
+.nav-links a:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
 
 /* Project Filters */
 .filter-controls {
@@ -250,6 +256,11 @@ nav {
     border-color: var(--accent-color);
     color: var(--bg-color);
     box-shadow: 0 0 15px var(--glow-color);
+}
+
+.filter-btn:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
 }
 
 /* centers content and handles spacing for every page */
@@ -375,6 +386,12 @@ body:has(#contact-form) .container {
     color: var(--accent-color);
 }
 
+.social-links-hero a:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
 /* Breathing effect of main panel on index page. Cubic bezier (ease-in-out) defines the rhythm, or how, i.e. start slow, get fast in middle, then end slow.*/
 .floating-element {
     animation: gentleFloat 10s infinite ease-in-out;
@@ -444,8 +461,15 @@ body:has(#contact-form) .container {
 }
 
 /* vertical accent bar is disabled normally, but scaleY(1) opens it to full length on hovering */
-.project-card:hover::before {
+.project-card:hover::before,
+.project-card:focus-within::before {
     transform: scaleY(1);
+}
+
+.project-card:focus-visible,
+.timeline-item:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 5px;
 }
 
 /* small labels over every project */
@@ -562,6 +586,11 @@ input:checked+.slider:before {
     transform: translateX(26px);
 }
 
+.switch input:focus-visible + .slider {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+}
+
 
 /* Progress Bar */
 #progress-container {
@@ -624,6 +653,11 @@ input:checked+.slider:before {
 .toast-btn:hover {
     background: var(--accent-color);
     color: var(--white);
+}
+
+.toast-btn:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 
@@ -767,6 +801,33 @@ input:checked+.slider:before {
         display: block;
     }
 
+/* Accessibility Utilities */
+
+.modal-close-btn {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    padding: var(--space-xs) var(--space-sm);
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    transition: var(--transition-main);
+    width: fit-content;
+    align-self: flex-end;
+    margin-bottom: var(--space-md);
+}
+
+.modal-close-btn:hover {
+    background: var(--accent-color);
+    color: var(--white);
+}
+
+.modal-close-btn:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+}
+
     /* Project modal adjustments */
     .modal-content {
         height: auto !important;
@@ -907,7 +968,8 @@ textarea {
 
 input:focus,
 textarea:focus {
-    outline: none;
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
     border-color: var(--accent-color);
     box-shadow: 0 0 15px var(--glow-color);
     background: var(--bg-color);

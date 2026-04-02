@@ -13,6 +13,21 @@ if (themeToggle) {
 }
 
 
+// Generic keyboard support for custom focusable elements (Enter/Space to click)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        const target = e.target.closest('[tabindex="0"]');
+        if (target) {
+            // Only trigger if the target itself is focused (not an input inside it)
+            if (document.activeElement === target) {
+                if (e.key === ' ') e.preventDefault(); // Prevent scrolling
+                target.click();
+            }
+        }
+    }
+});
+
+
 const timelineList = document.querySelector('.timeline-list');
 
 // Generic 3D Tilt Effect
@@ -204,6 +219,8 @@ document.querySelectorAll('.scroll-animate, .timeline-item').forEach(node => obs
 const projectModalWindow = document.getElementById('project-modal');
 const projectModalCloseBtn = document.getElementById('close-modal');
 
+let lastFocusedElement;
+
 if (projectModalWindow && projectModalCloseBtn) {
     projectCards.forEach(card => {
         card.addEventListener('click', () => {
@@ -219,8 +236,10 @@ if (projectModalWindow && projectModalCloseBtn) {
             document.getElementById('modal-evolution').innerText = card.getAttribute('data-evolution');
             document.getElementById('modal-tradeoffs').innerText = card.getAttribute('data-tradeoffs');
 
+            lastFocusedElement = document.activeElement;
             projectModalWindow.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            projectModalCloseBtn.focus();
         });
     });
 
@@ -228,15 +247,23 @@ if (projectModalWindow && projectModalCloseBtn) {
     applyTilt(projectCards, 1000, 8, 1.02);
     applyTilt(document.querySelectorAll('.modal-content'), 2000, 10, 1);
 
-    projectModalCloseBtn.addEventListener('click', () => {
+    function closeModal() {
         projectModalWindow.style.display = 'none';
         document.body.style.overflow = 'auto';
-    });
+        if (lastFocusedElement) lastFocusedElement.focus();
+    }
+
+    projectModalCloseBtn.addEventListener('click', closeModal);
 
     window.addEventListener('click', (e) => {
         if (e.target === projectModalWindow) {
-            projectModalWindow.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            closeModal();
+        }
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && projectModalWindow.style.display === 'flex') {
+            closeModal();
         }
     });
 }

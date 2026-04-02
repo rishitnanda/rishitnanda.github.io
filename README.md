@@ -50,7 +50,7 @@ The `@media (prefers-reduced-motion: reduce)` query respects the user's OS-level
 
 ## D4 — JavaScript
 
-I chose to do all 4 features as they were all very interesting and elevated the site's functionality and user experience.
+I chose to do the first 3 features fully and B4 partially as they were all very interesting and elevated the site's functionality and user experience.
 
 ### Group A Features
 
@@ -79,8 +79,6 @@ The blinking cursor is purely CSS — a `@keyframes blink` animation using `step
 #### B2 — Collapsible Timeline with Event Delegation
 
 The About page timeline is built as a single `<ul>` with `<li>` items. Instead of binding a click handler to every single list item (which would be 7 separate listeners), I bound exactly one listener to the parent `<ul>`. When any child is clicked, the event bubbles up, and I use `e.target.closest('.timeline-item')` to figure out which item was actually tapped.
-
-The expand/collapse animation uses the `max-height` CSS transition technique. The problem it solves: CSS cannot transition `height: auto` because the browser doesn't know the target pixel value at transition start. The workaround is to transition `max-height` from `0` to some large-enough value like `500px`. The tradeoff is that if content is shorter than 500px (which it always is in my case), the transition timing is slightly off — the animation technically runs for the full 500px worth of time, but most of that time is invisible because the content has already finished expanding. I chose 500px as a safe ceiling that makes the timing feel natural for my content lengths.
 
 ---
 
