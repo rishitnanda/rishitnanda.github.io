@@ -330,25 +330,17 @@ magneticButtons.forEach(btn => {
 });
 
 
-const motionToggle = document.querySelector('#motion-toggle');
+// Reduced Motion system preference handler
+const hudStatus = document.querySelector('.hud-right');
+const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-// Motion accessibility toggle
-if (motionToggle) {
-    const isReduced = localStorage.getItem('reducedMotion') === 'true';
-    const hud = document.querySelector('.hud-right');
-
-    if (isReduced) {
-        motionToggle.checked = true;
-        document.body.classList.add('reduced-motion');
-        if (hud) hud.innerHTML = 'STATUS // SECURE<br>MINIMALIST: ON';
-    } else {
-        if (hud) hud.innerHTML = 'STATUS // SECURE<br>MINIMALIST: OFF';
+function updateMotionStatus() {
+    if (hudStatus) {
+        const isReduced = motionQuery.matches;
+        hudStatus.innerHTML = `STATUS // SECURE<br>REDUCED MOTION: ${isReduced ? 'ON' : 'OFF'}`;
     }
-
-    motionToggle.addEventListener('change', (e) => {
-        const active = e.target.checked;
-        document.body.classList.toggle('reduced-motion', active);
-        localStorage.setItem('reducedMotion', active);
-        if (hud) hud.innerHTML = `STATUS // SECURE<br>MINIMALIST: ${active ? 'ON' : 'OFF'}`;
-    });
 }
+
+// Initialize and listen for changes
+updateMotionStatus();
+motionQuery.addEventListener('change', updateMotionStatus);

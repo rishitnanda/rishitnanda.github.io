@@ -627,7 +627,16 @@ input:checked+.slider:before {
 }
 
 
-/* Reduced Motion: 0.01ms of animation/transition duration isn't visible to eye */
+/* 
+   Reduced Motion Styling:
+   This section handles accessibility for users who prefer reduced motion.
+   I have removed the manual toggle button to strictly adhere to the system-level 
+   'prefers-reduced-motion' media query. This ensures a consistent and predictable
+   experience across the entire OS, while also improving performance by avoiding
+   unnecessary JavaScript-based class toggling. All animations and transitions 
+   are set to 0.01ms (to allow animation-end events to still trigger) when 
+   reduced motion is enabled.
+*/
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -640,19 +649,6 @@ input:checked+.slider:before {
         opacity: 1 !important;
         transform: none !important;
     }
-}
-
-/* Reduced Motion Toggle (Sync with status indicator) */
-body.reduced-motion * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-}
-
-body.reduced-motion .scroll-animate {
-    opacity: 1 !important;
-    transform: none !important;
 }
 
 
