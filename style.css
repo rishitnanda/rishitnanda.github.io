@@ -1312,6 +1312,13 @@ textarea:focus {
     margin-bottom: 1rem;
 }
 
+@media (max-width: 1023px) {
+    .hero h1.hero-animate {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
 @media (max-width: 768px) {
     .hero h1.hero-animate {
         font-size: 3rem;
