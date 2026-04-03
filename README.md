@@ -1,6 +1,6 @@
 ### Name: Rishit Nanda
 ### Roll No: 2025111008
-### URL: [Click Here]()
+### URL: [Click Here](https://researchweb.iiit.ac.in/~rishit.nanda/)
 
 # How It Started
 
