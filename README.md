@@ -128,6 +128,9 @@ The About page timeline is built as a single `<ul>` with `<li>` items. Instead o
 - **Logical Mapping**: Updated the event delegation in `script.js` to target the card itself, ensuring the timeline remains fully collapsible and keyboard-navigable while passing formal accessibility validation.
 
 ### Latest Fixes (2026-04-03)
+- **Fluid Navbar (Mobile)**: Implemented dynamic footprint reduction using `clamp()` to ensure the theme toggle stays on the same line as navigation links, regardless of the mobile device width.
+- **Timeline Interaction (Selector Fix)**: Resolved a critical mapping bug where `aria-expanded` was being checked on the `<li>` element instead of the inner `.timeline-card` div.
+- **Mobile Detail View**: Standardized the timeline experience for mobile by ensuring inline images are correctly injected and visible within the expanded accordion view.
 - Home: removed invalid `aria-label` on `span.typewriter-text` with `aria-live="polite"` (needed to satisfy specification for non-semantic spans).
 - Projects: removed invalid `role="button"` from `article.project-card`; kept keyboard access with `tabindex="0"`.
 - Projects: added `aria-label="Projects overview"` and a hidden heading `<h2 class="sr-only">Project Archive</h2>` to satisfy section heading requirement.
