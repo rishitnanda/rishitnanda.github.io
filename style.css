@@ -1,6 +1,3 @@
-/* Fonts */
-
-
 /* Primary font for headers; excludes digits */
 @font-face {
     font-family: 'Flashstrike';
@@ -156,18 +153,7 @@ h3,
     margin-top: 0;
 }
 
-/* Screen reader only utility */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
+
 
 h1 {
     font-size: var(--text-3xl);
@@ -732,16 +718,7 @@ input:checked+.slider:after {
 }
 
 
-/* 
-   Reduced Motion Styling:
-   This section handles accessibility for users who prefer reduced motion.
-   I have removed the manual toggle button to strictly adhere to the system-level 
-   'prefers-reduced-motion' media query. This ensures a consistent and predictable
-   experience across the entire OS, while also improving performance by avoiding
-   unnecessary JavaScript-based class toggling. All animations and transitions 
-   are set to 0.01ms (to allow animation-end events to still trigger) when 
-   reduced motion is enabled.
-*/
+/* Reduced Motion Styling */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
