@@ -383,6 +383,7 @@ body:has(#contact-form) .container {
     max-width: 800px;
     width: 100%;
     z-index: 10;
+    container-type: inline-size;
 }
 
 .social-links-hero {
@@ -767,12 +768,13 @@ input:checked+.slider:after {
 
     nav {
         flex-wrap: nowrap !important;
-        border-radius: 20px;
-        gap: clamp(10px, 4vw, 25px);
-        padding: 8px clamp(15px, 4vw, 25px);
+        border-radius: 50px;
+        gap: clamp(10px, 5vw, 30px);
+        padding: clamp(12px, 3vh, 16px) clamp(18px, 6vw, 30px);
         justify-content: center;
         width: fit-content;
         max-width: 95%;
+        border-width: 1px;
     }
 
     .nav-links {
@@ -945,9 +947,10 @@ input:checked+.slider:after {
     }
 
     .glass-panel {
-        padding: var(--space-lg) !important;
-        max-width: 90% !important;
+        padding: clamp(2.5rem, 8vw, 4rem) var(--space-lg) !important;
+        max-width: 92% !important;
         margin: 0 auto !important;
+        border-radius: var(--radius);
     }
 
     /* Prevent heading overflow with fluid scaling */
@@ -1320,12 +1323,29 @@ textarea:focus {
     .hero h1.hero-animate {
         word-break: break-word;
         overflow-wrap: break-word;
+        line-height: 1.1;
     }
 }
 
 @media (max-width: 768px) {
     .hero h1.hero-animate {
-        font-size: 3rem;
+        /* Fluid typography relative to the glass-panel size, not just the screen */
+        font-size: clamp(2.8rem, 24cqw, 4.8rem);
+        max-width: 340px; 
+        margin: 0 auto 2rem;
+    }
+
+    .social-links-hero {
+        gap: 2.5rem;
+        margin-top: 1rem;
+    }
+
+    .social-links-hero svg {
+        transform: scale(1.4);
+    }
+
+    .typewriter-text {
+        font-size: 1.1rem;
     }
 }
 
