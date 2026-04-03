@@ -12,39 +12,56 @@ The idea was to shape the website like a terminal or a futuristic dashboard. I s
 
 ### 1. Typography choices
 
-- **Progress** is this aggressive, display font that I use on all headings. It looks incredible for uppercase text, but it doesn't work well with digits, the numbers are illegible. My fix was to use `unicode-range` in the `@font-face` declaration to explicitly exclude the digit character range (U+0030 through U+0039). This way, any time a number appears inside a Progress-styled element, the browser uses Fira Code.
+- **Flashstrike (Progress)**: This aggressive, industrial display font is used for headers to convey **authority and system-level hierarchy**. It mirrors the "boot sequence" of a high-end interface. 
+    - *Justification*: To maintain legibility despite its futuristic style, I used `unicode-range` in the `@font-face` declaration to explicitly exclude the digit character range (U+0030 through U+0039). This ensures that while headers remain bold and thematic, all numerical data is rendered in a clear, monospaced alternative.
 
-- **Fira Code** handles all the technical/monospace stuff — the typewriter text, the JSON block on the contact page, the status indicators.
+- **Fira Code**: Used for all technical/monospace elements like the typewriter text, JSON blocks, and status indicators.
+    - *Justification*: It acts as the **"technical anchor"** for the site, validating the developer persona and bridging the gap between a standard UI and a terminal environment.
 
-- **Handmade** is the body font. It's a softer font to make give that human vibe to the site. Without it, the site felt too cold and robotic.
+- **Handmade**: The primary body font. 
+    - *Justification*: It was chosen specifically to provide a **human/organic contrast** to the otherwise "cold" and robotic system aesthetic. This duality represents the core of *Interface Design*: making rigid systems accessible and warm for human users.
 
 ### 2. The CSS Custom Property System
 
-I named all CSS variables semantically rather than visually. For example, `--glass-bg` instead of `--white-70-opacity`. This matters because in dark mode, `--glass-bg` changes from `rgba(255,255,255,0.7)` to `rgba(18,18,18,0.8)` — a completely different color. If I had named it `--white-70`, switching themes would make the variable name a lie. Semantic names let me swap entire palettes by only redeclaring the values in the `[data-theme="dark"]` block.
+I named all CSS variables semantically rather than visually (e.g., `--glass-bg` vs. `--white-70`).
+    - *Justification*: This ensures **architectural scalability**. By decoupling name from value, swapping entire palettes (Light to Dark) only requires redeclaring values in a single block without making the variable names obsolete or misleading.
 
-The `--warning-color` variable was added to the design system and is applied to the contact form's error state, keeping error styling consistent without hardcoding colors.
+### 3. The Anti-Gravity Ambience (Background Blobs)
 
-### 3. The Background Blobs
-
-The site uses ambient background blobs created with CSS. Two large blurred circles are positioned at the viewport edges and animated to drift slowly. They create organic color washes behind the content, enhancing the "anti-gravity" theme.
+- **Justification**: Soft, drifting background blobs (blurred circles) were added to **break the rigidity** of the engineering grid. They convey a sense of fluidity and depth, justifying the project's "anti-gravity" theme and providing a premium visual polish that simple solid backgrounds lack.
 
 ---
 
 ## D3 — Motion & Animation
 
-### 1. Hero Entrance Sequence
-Three elements (name, subtitle, social links) fade up in staggered sequence on page load using CSS @keyframes. The stagger guides your eye: name first, then context, then action links. The `animation-fill-mode: forwards` keyword is critical here — without it, elements snap back to `opacity: 0` after the animation ends because that's their initial CSS state. `forwards` tells the browser "keep the final keyframe values."
+### 1. Hero Entrance: The "System Boot" Sequence
+Three elements (name, subtitle, social links) fade up in a staggered sequence.
+    - *Conveyance*: This mimics a **system initialization** or software loading process. The stagger guides the user's focus from identity (name) to purpose (subtitle) to action (links).
+    - *Justification*: Using `cubic-bezier(0.16, 1, 0.3, 1)` creates a slight "overshoot" effect, making the UI feel **fluid and dynamic** rather than linear and mechanical.
 
-The easing curve `cubic-bezier(0.16, 1, 0.3, 1)` creates an overshoot effect where elements slide slightly past their resting position before settling. The values chosen were by trial and error.
+### 2. Scroll-Triggered Physics
+Below-the-fold content enters with a slight downward offset and a 1-degree skew.
+    - *Conveyance*: The skew simulates **physical weight and gravity**.
+    - *Justification*: It creates a sense of **depth and tactility**, as if the cards are physically sliding into a frame or rack as the user "pulls" the content up.
 
-### 2. Scroll-Triggered Sections
-Below-the-fold content starts invisible with a slight downward offset and a 1-degree skew. When the Intersection Observer detects them entering the viewport, a CSS class is toggled that transitions them to full visibility. The subtle skew during entry makes elements feel like they're physically "swinging" into place under gravity.
+### 3. Magnetic & Spring Micro-Interactions
+Navigation and buttons utilize `cubic-bezier(0.175, 0.885, 0.32, 1.275)`.
+    - *Conveyance*: These curves create a **Spring-loaded "bounce back"** effect, mimicking physical elasticity.
+    - *Justification*: Interactive elements "pull" toward the cursor via magnetic logic to increase **user engagement and delight**. It signals that the interface is "alive" and actively responding to user intent.
 
-### 3. Magnetic Button Micro-Interaction
-Navigation links and buttons use `cubic-bezier(0.175, 0.885, 0.32, 1.275)` — a curve where the second control point exceeds 1.0, creating a spring-like "bounce back" effect. This specific easing suits buttons because it feels like physical elasticity and responsiveness. When you move your mouse over a nav link, it follows your cursor with a magnetic pull (30% of the offset distance), then springs back to center when you leave. The bounce-back curve makes this feel tactile rather than mechanical.
+### 4. 3D Tilt & perspective
+Project cards and modals react to mouse movement with a perspective-aware 3D tilt.
+    - *Conveyance*: It reinforces the **layered glassmorphism** aesthetic.
+    - *Justification*: By allowing the user to "tilt" the panels, it emphasizes that they are objects floating in an anti-gravity 3D space, rather than flat 2D images.
 
-### 4. Reduced Motion Handling
-The `@media (prefers-reduced-motion: reduce)` query respects the user's OS-level accessibility setting. When enabled, it forces all animation and transition durations to near-zero (0.01ms, not 0, so animation-end events still run). There's also a manual toggle in the nav bar that applies the same rules via a CSS class, giving users control even if their OS setting is off. Both approaches are commented directly in the CSS explaining what they do and why. (Note: This feature has been mentioned as Minimalist mode several times throughout my site and code.)
+### 5. Typewriter Feedback
+- **Conveyance**: Directly simulates a **low-level terminal prompt** or system log.
+- **Justification**: It provides **dynamic storytelling** in the hero section, keeping the landing page visually active and reinforcing the "System Node" theme.
+
+### 6. Reduced Motion Handling
+The `@media (prefers-reduced-motion: reduce)` query respects OS-level accessibility settings.
+    - *Justification*: Ensures that users with vestibular disorders or a preference for **minimalism and speed** can use the site comfortably. It demonstrates a commitment to inclusive, professional-grade interface design.
+
 
 ---
 
@@ -97,9 +114,24 @@ The About page timeline is built as a single `<ul>` with `<li>` items. Instead o
 - **The "Why"**: This creates a single "Control Center" for the site's mobile experience. It prevents "Specificity Wars" between files and allows us to use **`!important`** in the global stylesheet to consistently override local desktop styles across the entire mobile site.
 
 ### Unified Breakpoint Synchronization (Bug Fix)
-- **Problem (Bug)**: Previously, a "dead zone" existed at . CSS thought it was mobile (hiding the hover sidebar), but JS thought it was desktop (failing to inject inline images).
+- **Problem (Bug)**: Previously, a "dead zone" existed at 1023px. CSS thought it was mobile (hiding the hover sidebar), but JS thought it was desktop (failing to inject inline images).
 - **Solution**: Synchronized all breakpoints (CSS and JS) to **1023px**. 
 - **Structural Fix**: Redesigned the About page timeline to wrap descriptions in `.timeline-content`. This enables the CSS `max-height` transition and provides a dedicated container for injected inline images on mobile/tablet devices.
+
+### Timeline Image Viewport Constraint (Overlap Fix)
+- **Problem**: On large desktop screens, the fixed timeline hover images would sometimes overflow the screen or overlap other UI elements due to original aspect ratio scaling.
+- **Solution**: Implemented a `max-height: 75vh` constraint and `object-fit: cover` styling on the `#timeline-img` element. This ensures the preview image remains fully contained within the browser's vertical viewport regardless of its native dimensions.
+
+### Semantic Conflict (List Item vs. Button Role)
+- **Problem**: Assigning `role="button"` to `<li>` elements inside a `<ul>` violates ARIA semantics. An `<li>` tag's implicit role is `listitem`, and changing it breaks the standard structural relation for screen readers.
+- **Solution**: Moved all interactive attributes (`tabindex`, `role="button"`, `aria-expanded`, and `aria-label`) from the `<li>` element to the inner `div.timeline-card`. 
+- **Logical Mapping**: Updated the event delegation in `script.js` to target the card itself, ensuring the timeline remains fully collapsible and keyboard-navigable while passing formal accessibility validation.
+
+### Latest Fixes (2026-04-03)
+- Home: removed invalid `aria-label` on `span.typewriter-text` with `aria-live="polite"` (needed to satisfy specification for non-semantic spans).
+- Projects: removed invalid `role="button"` from `article.project-card`; kept keyboard access with `tabindex="0"`.
+- Projects: added `aria-label="Projects overview"` and a hidden heading `<h2 class="sr-only">Project Archive</h2>` to satisfy section heading requirement.
+- Projects modal: adjusted heading hierarchy from `h4` to `h3` for proper nesting after `<h2>`.
 
 ### Visual Feedback (Form Persistence)
 - **Problem**: When a user submits an invalid form, it's often unclear exactly which field has failed validation.

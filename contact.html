@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Rishit Nanda</title>
     <meta name="description" content="Contact Rishit Nanda - Transmission Link for Systems and Interface Design Projects">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="font_display.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="style.css">
     <script>
         // Set theme immediately to avoid flash
@@ -73,10 +77,29 @@
             transition: all 0.1s;
         }
 
+        [data-theme="dark"] .cyber-btn {
+            background: #6A1B9A;
+        }
+
         .cyber-btn:hover {
+            box-shadow: 0 0 20px var(--glow-color);
+            transform: scale(1.02);
+        }
+
+        .cyber-btn:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 4px;
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        .cyber-btn:active {
             background: var(--white);
             color: var(--accent-color);
-            transform: scale(0.98);
+            transform: scale(0.95);
+        }
+
+        [data-theme="dark"] .cyber-btn:active {
+            color: #6A1B9A;
         }
 
         /* JSON output block */
@@ -113,7 +136,7 @@
             </ul>
             <div class="switch-group">
                 <label class="switch">
-                    <input type="checkbox" id="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" aria-label="Toggle dark mode">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -145,7 +168,7 @@
                             placeholder="_"></textarea>
                     </div>
 
-                    <button type="submit" class="cyber-btn">[ INITIATE_TRANSMISSION ]</button>
+                    <button type="submit" class="cyber-btn">[ TRANSMIT ]</button>
                     <span class="error-msg" style="display: none; color: var(--error-color); margin-top: 10px;">> ERR:
                         INVALID_PAYLOAD</span>
                 </form>
@@ -183,7 +206,7 @@
     </main>
 
     <!-- Load scripts -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script type="module">
         import { ReadingProgress } from './progress.js';
         new ReadingProgress('progress-bar');

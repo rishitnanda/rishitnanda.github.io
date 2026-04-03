@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | Rishit Nanda</title>
     <meta name="description" content="About Rishit Nanda - Systems and Interface Design Portfolio">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="font_display.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="style.css">
     <script>
         // Set theme immediately to avoid flash
@@ -31,7 +35,7 @@
             </ul>
             <div class="switch-group">
                 <label class="switch">
-                    <input type="checkbox" id="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" aria-label="Toggle dark mode">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -55,7 +59,7 @@
 
         <aside id="about-side-img" class="hero-side scroll-animate" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 2rem;">
             <div class="about-image floating-element">
-                <img src="images/pfp.jpg" alt="Rishit Nanda" id="pfp" style="max-width: 320px; border: 2px solid var(--text-color); padding: 5px; background: var(--bg-color); object-fit: cover;">
+                <img src="images/pfp.jpg" alt="Rishit Nanda" id="pfp" fetchpriority="high" style="max-width: 320px; border: 2px solid var(--text-color); padding: 5px; background: var(--bg-color); object-fit: cover;">
                 <br>
                 <small class="status-indicator"></small>
             </div>
@@ -65,56 +69,56 @@
         <section class="timeline-section scroll-animate">
             <h2 class="section-title">SYSTEM_TIMELINE</h2>
             <ul class="timeline-list">
-                <li class="timeline-item" tabindex="0">
-                    <div class="timeline-card">
+                <li class="timeline-item">
+                    <div class="timeline-card" tabindex="0" role="button" aria-expanded="false" aria-label="Timeline event">
                         <span class="tag">Class 6</span>
                         <h3>First Steps in Web</h3>
                         <p>Started learning HTML and CSS at my alma mater, Vishwa Bharati Public School, Noida. This laid the fundamental visual groundwork for my interest in web technologies and user interfaces. I spent countless hours tweaking layouts and color schemes, discovering the immediate visual feedback loop of front-end development.</p>
                         <div class="timeline-content"></div>
                     </div>
                 </li>
-                <li class="timeline-item" tabindex="0">
-                    <div class="timeline-card">
+                <li class="timeline-item">
+                    <div class="timeline-card" tabindex="0" role="button" aria-expanded="false" aria-label="Timeline event">
                         <span class="tag">Class 9</span>
                         <h3>Learning Python</h3>
                         <p>Began programming in Python at the same school, sparking a deeper interest in logic and computing. Python's clean syntax allowed me to transition from pure visual design to procedural logic, culminating in small automation scripts and text-based tools.</p>
                         <div class="timeline-content"></div>
                     </div>
                 </li>
-                <li class="timeline-item" tabindex="0">
-                    <div class="timeline-card">
+                <li class="timeline-item">
+                    <div class="timeline-card" tabindex="0" role="button" aria-expanded="false" aria-label="Timeline event">
                         <span class="tag">Class 11</span>
                         <h3>Building Applications</h3>
                         <p>Started building apps using Tkinter, Pygame, HTML, CSS, and JSX for the first time. This era marked a definitive shift from writing simple terminal scripts to engineering fully-fledged graphical user interfaces and complex game logic loops.</p>
                         <div class="timeline-content"></div>
                     </div>
                 </li>
-                <li class="timeline-item" tabindex="0">
-                    <div class="timeline-card">
+                <li class="timeline-item">
+                    <div class="timeline-card" tabindex="0" role="button" aria-expanded="false" aria-label="Timeline event">
                         <span class="tag">Class 12</span>
                         <h3>Modern Web Dev</h3>
                         <p>Learnt the basics of TypeScript, adding standard strict typing to my web tools. The introduction of static typing taught me the immense value of scalable architecture and catching critical runtime errors at compile time.</p>
                         <div class="timeline-content"></div>
                     </div>
                 </li>
-                <li class="timeline-item" tabindex="0">
-                    <div class="timeline-card">
+                <li class="timeline-item">
+                    <div class="timeline-card" tabindex="0" role="button" aria-expanded="false" aria-label="Timeline event">
                         <span class="tag">July 2025</span>
                         <h3>IIIT Hyderabad</h3>
                         <p>Secured admission into the Computer Science and Engineering (CSD) branch at IIIT Hyderabad through the highly competitive UGEE examination. This pivotal moment marked the beginning of my formal computer science education at a premier institute.</p>
                         <div class="timeline-content"></div>
                     </div>
                 </li>
-                <li class="timeline-item" tabindex="0">
-                    <div class="timeline-card">
+                <li class="timeline-item">
+                    <div class="timeline-card" tabindex="0" role="button" aria-expanded="false" aria-label="Timeline event">
                         <span class="tag">Dec 2025</span>
                         <h3>Semester 1 Completed</h3>
                         <p>Finished my first semester at IIITH with a keen interest heavily leaning toward Digital Systems, Computer Architecture, and Microcontrollers. Gained critical hands-on experience in low-level hardware resource management.</p>
                         <div class="timeline-content"></div>
                     </div>
                 </li>
-                <li class="timeline-item" tabindex="0">
-                    <div class="timeline-card">
+                <li class="timeline-item">
+                    <div class="timeline-card" tabindex="0" role="button" aria-expanded="false" aria-label="Timeline event">
                         <span class="tag">CURRENT</span>
                         <h3>Semester 2 & Beyond</h3>
                         <p>Ongoing: Semester 2. Actively expanding my low-level engineering skills, focusing on modular C programming, Linux system internals, memory safety, and automated workflow pipelines.</p>
@@ -127,11 +131,11 @@
 
     <!-- Timeline image display (desktop only) -->
     <div id="timeline-hover-display">
-        <img id="timeline-img" src="">
+        <img id="timeline-img" src="images/timeline_entry_1.jpg" alt="Timeline overview image">
     </div>
 
     <!-- Load scripts -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script type="module">
         import { ReadingProgress } from './progress.js';
         new ReadingProgress('progress-bar');

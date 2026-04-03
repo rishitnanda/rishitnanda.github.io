@@ -9,6 +9,14 @@ if (themeToggle) {
         const theme = e.target.checked ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
+
+        // Add surge animation
+        const switchLabel = themeToggle.closest('.switch');
+        if (switchLabel) {
+            switchLabel.classList.remove('switch-surge');
+            void switchLabel.offsetWidth; // Trigger reflow
+            switchLabel.classList.add('switch-surge');
+        }
     });
 }
 
@@ -58,11 +66,16 @@ function applyTilt(elements, perspective = 1000, intensity = 8, scale = 1) {
 // Use event delegation for timeline expansion
 if (timelineList) {
     timelineList.addEventListener('click', (event) => {
-        const clickedItem = event.target.closest('.timeline-item');
-        if (!clickedItem) return;
+        const clickedCard = event.target.closest('.timeline-card');
+        if (!clickedCard) return;
 
-        const isExpanded = clickedItem.getAttribute('aria-expanded') === 'true';
-        clickedItem.setAttribute('aria-expanded', !isExpanded);
+        const isExpanded = clickedCard.getAttribute('aria-expanded') === 'true';
+        clickedCard.setAttribute('aria-expanded', !isExpanded);
+        
+        // Update aria-label for screen readers to reflect new state
+        clickedCard.setAttribute('aria-label', !isExpanded ? 'Timeline event expanded' : 'Timeline event collapsed');
+
+        const clickedItem = clickedCard.closest('.timeline-item');
 
         // Inject image inline on mobile when expanded
         if (window.matchMedia('(max-width: 1023px)').matches) {
@@ -101,6 +114,7 @@ if (tagFilterButtons.length > 0) {
             const val = btn.getAttribute('data-filter');
             const isActive = activeFilters.includes(val) || (activeFilters.includes('all') && val === 'all');
             btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-pressed', isActive);
         });
 
         projectCards.forEach(card => {
@@ -243,7 +257,8 @@ if (projectModalWindow && projectModalCloseBtn) {
         });
     });
 
-    // Apply tilt to cards and modal
+    // Apply 3D tilt effect to project cards and modal windows
+    // Higher perspective values feel "flatter", lower values intensify the 3D depth
     applyTilt(projectCards, 1000, 8, 1.02);
     applyTilt(document.querySelectorAll('.modal-content'), 2000, 10, 1);
 
@@ -309,6 +324,7 @@ function type() {
     if (!display) return;
 
     const text = phrases[phraseIdx];
+    // Dynamic typing speeds: slower typing (human-like), faster deleting
     let nextSpeed = isDeleting ? 45 : 100;
 
     if (!isDeleting) {

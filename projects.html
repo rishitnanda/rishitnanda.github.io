@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects | Rishit Nanda</title>
     <meta name="description" content="Technical Project Archive of Rishit Nanda - Systems and Interface Design">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="font_display.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="style.css">
     <script>
         // Set theme immediately to avoid flash
@@ -31,7 +35,7 @@
             </ul>
             <div class="switch-group">
                 <label class="switch">
-                    <input type="checkbox" id="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" aria-label="Toggle dark mode">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -45,16 +49,17 @@
         </header>
 
         <div class="filter-controls scroll-animate delay-2">
-            <button class="filter-btn active" data-filter="all">ALL_UNITS</button>
-            <button class="filter-btn" data-filter="games">GAMES</button>
-            <button class="filter-btn" data-filter="ui_ux">UI_UX</button>
-            <button class="filter-btn" data-filter="python">PYTHON</button>
-            <button class="filter-btn" data-filter="c_cpp">C/C++</button>
+            <button class="filter-btn active" data-filter="all" aria-pressed="true">ALL_UNITS</button>
+            <button class="filter-btn" data-filter="games" aria-pressed="false">GAMES</button>
+            <button class="filter-btn" data-filter="ui_ux" aria-pressed="false">UI_UX</button>
+            <button class="filter-btn" data-filter="python" aria-pressed="false">PYTHON</button>
+            <button class="filter-btn" data-filter="c_cpp" aria-pressed="false">C/C++</button>
         </div>
 
-        <section class="projects-grid">
+        <section class="projects-grid" aria-label="Projects overview">
+            <h2 class="sr-only">Project Archive</h2>
 
-            <article class="project-card scroll-animate" tabindex="0"
+            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
                 data-category="games python ui_ux"
                 data-full="A personalized multi-game library system built with Python and Tkinter. It centralizes various small projects and mini-games into a single accessible dashboard, seamlessly launching individual game modules on demand."
                 data-origin="Created to aggregate scattered Python game scripts into one cohesive, polished environment instead of running them individually from the terminal."
@@ -65,7 +70,7 @@
                 <p>A central dashboard launcher for various localized Python mini-games.</p>
             </article>
 
-            <article class="project-card scroll-animate" tabindex="0"
+            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
                 data-category="ui_ux python"
                 data-full="Integrated a real-time facial recognition pipeline using the dlib-based face_recognition library. The system performs 128-dimension face encoding and compares them against a MySQL database with a 0.6 distance threshold for high-accuracy identification."
                 data-origin="Designed to bridge the gap between low-level computer vision scripts and high-level user management. I needed a secure way to visualize 'Vision' database records while handling live camera streams without frame-rate drop."
@@ -74,7 +79,7 @@
                 <span class="project-tag">#UI #PYTHON</span>
                 <h3>Biometric Interface</h3>
                 <p>Modular facial recognition suite built with CustomTkinter and MySQL. Features real-time tracking, database logging, and an administrative access control layer.</p>
-            </article>            <article class="project-card scroll-animate" tabindex="0"
+            </article>            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
                 data-category="python ui_ux"
                 data-full="Uses Python's Tkinter for interface mapping and Pillow (PIL) for image manipulation. Takes precise parameters for row/column counts, x/y offsets, spacing, and background dimensions to mathematically position and join multiple disparate images onto a single blank canvas structure."
                 data-origin="Created to automate the tedious process of manually aligning, spacing, and joining data sprites or image matrices for asset creation."
@@ -84,7 +89,7 @@
                 <h3>PNG Grid Generator</h3>
                 <p>A GUI application that precisely concatenates and spaces multiple image inputs into configured matrices.</p>
             </article>
-            <article class="project-card scroll-animate" tabindex="0"
+            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
                 data-category="python games"
                 data-full="A robust network backend architecture managing 14 concurrent players (7v7) along with a Game Master overlay. It handles complex state machinery for various roles (Chasers, Beaters, Keepers, Seekers). Features include action cooldown trackers, interdependent event counters, momentum handling, and live chat routing within the terminal."
                 data-origin="Created to explore concurrent state management, networking, and terminal-based multiplayer architectures through a logically complex game."
@@ -95,7 +100,7 @@
                 <p>A terminal-based, 14-player multiplayer backend simulating the intricate state-mechanics of Quidditch.</p>
             </article>
 
-            <article class="project-card scroll-animate" tabindex="0"
+            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
                 data-category="systems c_cpp"
                 data-full="It utilizes custom C structs and dynamically mapped linked lists (albums.c, songs.c) to maintain robust in-memory state management of tracks and albums. Includes a full command parser capable of executing CRUD operations safely."
                 data-origin="Developed as a system assignment to deliberately master explicit memory management, void pointers, scaling structs, and direct data structure manipulation in pure C."
@@ -112,7 +117,7 @@
     <!-- Project detail modal -->
     <div id="project-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content project-card">
-            <button id="close-modal" class="modal-close-btn">CLOSE_X</button>
+            <button id="close-modal" class="modal-close-btn" aria-label="Close project details">CLOSE_X</button>
             <div id="modal-body">
                 <span class="project-tag" id="modal-tag">#TAG</span>
                 <h2 id="modal-title">PROJECT_HEADING</h2>
@@ -120,11 +125,11 @@
 
                 <div class="modal-grid">
                     <section>
-                        <h4>TECHNICAL_LOG</h4>
+                        <h3>TECHNICAL_LOG</h3>
                         <p id="modal-full">Big Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     </section>
                     <section>
-                        <h4>ORIGIN_STORY</h4>
+                        <h3>ORIGIN_STORY</h3>
                         <p id="modal-origin">Why I built it: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
                     </section>
                     <section>
@@ -141,7 +146,7 @@
     </div>
 
     <!-- Load scripts -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script type="module">
         import { ReadingProgress } from './progress.js';
         new ReadingProgress('progress-bar');

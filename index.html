@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Rishit Nanda</title>
     <meta name="description" content="Portfolio of Rishit Nanda - Systems and Interface Design">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="font_display.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="style.css">
     <script>
         // Set theme immediately to avoid flash
@@ -31,7 +35,7 @@
             </ul>
             <div class="switch-group">
                 <label class="switch">
-                    <input type="checkbox" id="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" aria-label="Toggle dark mode">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -44,7 +48,7 @@
                 <h1 class="hero-animate delay-1">Rishit Nanda</h1>
                 <p class="hero-animate delay-2" style="font-family: monospace; font-size: 1.1em; opacity: 0.8; margin-bottom: 2rem;">
                     <!-- Typewriter -->
-                    <span class="typewriter-text"></span><span class="typewriter-cursor">|</span>
+                    <span class="typewriter-text" aria-live="polite"></span><span class="typewriter-cursor">|</span>
                 </p>
                 <div class="hero-animate delay-3 social-links-hero">
                     <a href="https://github.com/rishitnanda" target="_blank" aria-label="GitHub" class="magnetic-btn">
@@ -59,7 +63,7 @@
     </main>
 
     <!-- Load scripts -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script type="module">
         import { ReadingProgress } from './progress.js';
         new ReadingProgress('progress-bar');
