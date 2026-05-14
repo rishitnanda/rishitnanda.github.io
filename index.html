@@ -19,6 +19,7 @@
 <body>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <canvas id="bg-canvas"></canvas>
 
     <div class="hud hud-left">SYS.ID // 4099<br>NODE: ROOT</div>
     <div class="hud hud-right">STATUS // SECURE<br>_minimalist (to be replaced by script.js)_</div>
@@ -63,10 +64,15 @@
     </main>
 
     <!-- Load scripts -->
-    <script src="script.js" defer></script>
     <script type="module">
+        import { initMain } from './script.js';
         import { ReadingProgress } from './progress.js';
+        import { BackgroundEffect } from './bg-effect.js';
+
+        // Initialize all modules
+        initMain();
         new ReadingProgress('progress-bar');
+        new BackgroundEffect('bg-canvas');
     </script>
 </body>
 </html>

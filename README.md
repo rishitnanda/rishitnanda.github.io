@@ -1,42 +1,49 @@
 ### Name: Rishit Nanda
+
 ### Roll No: 2025111008
+
 ### URL: [Click Here](https://researchweb.iiit.ac.in/~rishit.nanda/)
 
 # How It Started
 
 The idea was to shape the website like a terminal or a futuristic dashboard. I started with the grid background. I knew I wanted a blueprint/engineering-paper feel, so I layered two perpendicular CSS linear gradients. Then I added radial gradient glows at specific viewport positions to solve the boring monocolor vibe. Getting the grid to stay fixed while content scrolled over it was just `background-attachment: fixed`, but it took me a while to realize why it was misbehaving on mobile, turns out, mobile browsers handle fixed backgrounds differently.
 
----
+* * *
 
 ## D2 — Visual Design System
 
-- **Progress**: This bold font gives a futuristic vibe to maintain the terminal/dashboard theme. To maintain legibility despite its futuristic style, I used `unicode-range` in the `@font-face` declaration to explicitly exclude the digit character range (U+0030 through U+0039). This ensures that while headers remain bold and thematic, all numerical data is rendered in a clear, monospaced alternative.
+-   **Progress**: This bold font gives a futuristic vibe to maintain the terminal/dashboard theme. To maintain legibility despite its futuristic style, I used `unicode-range` in the `@font-face` declaration to explicitly exclude the digit character range (U+0030 through U+0039). This ensures that while headers remain bold and thematic, all numerical data is rendered in a clear, monospaced alternative.
+    
+-   **Fira Code**: Used for all technical/monospace elements like the typewriter text, JSON blocks, and status indicators.
+    
+-   **Handmade**: The primary body font. It was chosen specifically to provide a human contrast to the otherwise cold and robotic system aesthetic.
+    
 
-- **Fira Code**: Used for all technical/monospace elements like the typewriter text, JSON blocks, and status indicators.
-
-- **Handmade**: The primary body font. It was chosen specifically to provide a human contrast to the otherwise cold and robotic system aesthetic.
-
----
+* * *
 
 ## D3 — Motion & Animation
 
-### 1. Hero Entrance: The "System Boot" Sequence
+### 1\. Hero Entrance: The "System Boot" Sequence
+
 Three elements (name, subtitle, social links) fade up in a staggered sequence. This mimics a software loading process. The stagger guides the user's focus from identity (name) to purpose (subtitle) to action (links). Using `cubic-bezier(0.16, 1, 0.3, 1)` creates a slight "overshoot" effect, making the UI feel fluid and dynamic rather than linear and mechanical.
 
-### 2. Scroll-Triggered Physics
+### 2\. Scroll-Triggered Physics
+
 Below-the-fold content enters with a slight downward offset and a 1-degree skew. The skew simulates physical weight and gravity giving a realistic feel.
 
-### 3. Magnetic & Spring Micro-Interactions
+### 3\. Magnetic & Spring Micro-Interactions
+
 Navigation and buttons utilize `cubic-bezier(0.175, 0.885, 0.32, 1.275)`. These curves create a spring-loaded bounce back effect. Interactive elements "pull" toward the cursor via magnetic logic. It signals that the interface is alive and actively responding to user intent.
 
-### 4. 3D Tilt & perspective
+### 4\. 3D Tilt & perspective
+
 Project cards and modals react to mouse movement with a perspective-aware 3D tilt. By allowing the user to tilt the panels, it emphasizes that they are objects floating in a 3D space, rather than flat 2D images.
 
-### 5. Typewriter Feedback
+### 5\. Typewriter Feedback
+
 Imitates a terminal prompt kind of vibe.
 
-
----
+* * *
 
 ## D4 — JavaScript
 
@@ -52,7 +59,7 @@ The tricky part was the toggle logic. Clicking "Python" when "All" is active nee
 
 #### A2 — Session-Persistent Reading Progress
 
-The About page has a thin progress bar at the top that tracks how far you've scrolled. But the important part is persistence: it saves your exact scroll position to `sessionStorage` on every scroll event. If you refresh the page or navigate away and come back, a toast notification shows up from the right asking if you want to resume where you left off.
+The About page has a thin progress rbar at the top that tracks how far you've scrolled. But the important part is persistence: it saves your exact scroll position to `sessionStorage` on every scroll event. If you refresh the page or navigate away and come back, a toast notification shows up from the right asking if you want to resume where you left off.
 
 I wrote this as `export class ReadingProgress` in its own file (`progress.js`) to keep it isolated from the main script. The toast notification is created entirely in JavaScript, it doesn't exist in the HTML at all, because it should only appear conditionally. The slide-in animation uses a CSS `right` property transition with a cubic-bezier curve that gives it an elastic "pop-in" feel.
 
@@ -70,57 +77,63 @@ The blinking cursor is purely CSS — a `@keyframes blink` animation using `step
 
 The About page timeline is built as a single `<ul>` with `<li>` items. Instead of binding a click handler to every single list item (which would be 7 separate listeners), I bound exactly one listener to the parent `<ul>`. When any child is clicked, the event bubbles up, and I use `e.target.closest('.timeline-item')` to figure out which item was actually tapped.
 
----
+* * *
 
 ## Structural & Semantic Notes
 
-- **Standardization**: The page structure has been unified across all HTML files to use the semantic `<header>` tag wrapping the navigation and progress bar.
-- **Global Reset (`box-sizing: border-box`)**: This is a standard global reset. It ensures that when you set a width for a card, any padding or borders you add are included **inside** that width. Without this, a card with 300px width + 20px padding would actually be 340px wide, which breaks most layouts.
-- **Nested Header Conflict**: To implement a site-wide sticky navigation, the root `<header>` is fixed to the top of the viewport. The CSS selector specifically targets `body > header` to prevent secondary headings (like "Project_Archive") from also becoming sticky.
-- **Responsive Heading Scaling**: Used fluid font sizing (`clamp`) for mobile headings to ensure long titles like "TRANSMISSION_LINK" automatically shrink to fit the viewport width instead of wrapping or overflowing.
+-   **Standardization**: The page structure has been unified across all HTML files to use the semantic `<header>` tag wrapping the navigation and progress bar.
+-   **Global Reset (`box-sizing: border-box`)**: This is a standard global reset. It ensures that when you set a width for a card, any padding or borders you add are included **inside** that width. Without this, a card with 300px width + 20px padding would actually be 340px wide, which breaks most layouts.
+-   **Nested Header Conflict**: To implement a site-wide sticky navigation, the root `<header>` is fixed to the top of the viewport. The CSS selector specifically targets `body > header` to prevent secondary headings (like "Project\_Archive") from also becoming sticky.
+-   **Responsive Heading Scaling**: Used fluid font sizing (`clamp`) for mobile headings to ensure long titles like "TRANSMISSION\_LINK" automatically shrink to fit the viewport width instead of wrapping or overflowing.
 
----
+* * *
 
 ## Major Issues Encountered
 
 ### Responsive Architecture (Centralized vs. Local)
-- **Problem**: Some desktop-only styles (like the `cyber-console` layout) are defined locally in `contact.html` to keep that page's specific logic isolated.
-- **Solution**: However, **all** mobile-responsive adjustments (`@media` queries) are centralized in **`style.css`**. 
-- **The "Why"**: This creates a single "Control Center" for the site's mobile experience. It prevents "Specificity Wars" between files and allows us to use **`!important`** in the global stylesheet to consistently override local desktop styles across the entire mobile site.
+
+-   **Problem**: Some desktop-only styles (like the `cyber-console` layout) are defined locally in `contact.html` to keep that page's specific logic isolated.
+-   **Solution**: However, **all** mobile-responsive adjustments (`@media` queries) are centralized in **`style.css`**.
+-   **The "Why"**: This creates a single "Control Center" for the site's mobile experience. It prevents "Specificity Wars" between files and allows us to use **`!important`** in the global stylesheet to consistently override local desktop styles across the entire mobile site.
 
 ### Unified Breakpoint Synchronization (Bug Fix)
-- **Problem (Bug)**: Previously, a "dead zone" existed at 1023px. CSS thought it was mobile (hiding the hover sidebar), but JS thought it was desktop (failing to inject inline images).
-- **Solution**: Synchronized all breakpoints (CSS and JS) to **1023px**. 
-- **Structural Fix**: Redesigned the About page timeline to wrap descriptions in `.timeline-content`. This enables the CSS `max-height` transition and provides a dedicated container for injected inline images on mobile/tablet devices.
+
+-   **Problem (Bug)**: Previously, a "dead zone" existed at 1023px. CSS thought it was mobile (hiding the hover sidebar), but JS thought it was desktop (failing to inject inline images).
+-   **Solution**: Synchronized all breakpoints (CSS and JS) to **1023px**.
+-   **Structural Fix**: Redesigned the About page timeline to wrap descriptions in `.timeline-content`. This enables the CSS `max-height` transition and provides a dedicated container for injected inline images on mobile/tablet devices.
 
 ### Timeline Image Viewport Constraint (Overlap Fix)
-- **Problem**: On large desktop screens, the fixed timeline hover images would sometimes overflow the screen or overlap other UI elements due to original aspect ratio scaling.
-- **Solution**: Implemented a `max-height: 75vh` constraint and `object-fit: cover` styling on the `#timeline-img` element. This ensures the preview image remains fully contained within the browser's vertical viewport regardless of its native dimensions.
+
+-   **Problem**: On large desktop screens, the fixed timeline hover images would sometimes overflow the screen or overlap other UI elements due to original aspect ratio scaling.
+-   **Solution**: Implemented a `max-height: 75vh` constraint and `object-fit: cover` styling on the `#timeline-img` element. This ensures the preview image remains fully contained within the browser's vertical viewport regardless of its native dimensions.
 
 ### Semantic Conflict (List Item vs. Button Role)
-- **Problem**: Assigning `role="button"` to `<li>` elements inside a `<ul>` violates ARIA semantics. An `<li>` tag's implicit role is `listitem`, and changing it breaks the standard structural relation for screen readers.
-- **Solution**: Moved all interactive attributes (`tabindex`, `role="button"`, `aria-expanded`, and `aria-label`) from the `<li>` element to the inner `div.timeline-card`. 
-- **Logical Mapping**: Updated the event delegation in `script.js` to target the card itself, ensuring the timeline remains fully collapsible and keyboard-navigable while passing formal accessibility validation.
+
+-   **Problem**: Assigning `role="button"` to `<li>` elements inside a `<ul>` violates ARIA semantics. An `<li>` tag's implicit role is `listitem`, and changing it breaks the standard structural relation for screen readers.
+-   **Solution**: Moved all interactive attributes (`tabindex`, `role="button"`, `aria-expanded`, and `aria-label`) from the `<li>` element to the inner `div.timeline-card`.
+-   **Logical Mapping**: Updated the event delegation in `script.js` to target the card itself, ensuring the timeline remains fully collapsible and keyboard-navigable while passing formal accessibility validation.
 
 ### Visual Feedback (Form Persistence)
-- **Problem**: When a user submits an invalid form, it's often unclear exactly which field has failed validation.
-- **Solution**: Implemented a **"Shake Animation"** specifically for invalid inputs. When the form is submitted and fails, the problematic fields snap left and right quickly, providing immediate and intuitive visual feedback that complements the text error messages.
 
----
+-   **Problem**: When a user submits an invalid form, it's often unclear exactly which field has failed validation.
+-   **Solution**: Implemented a **"Shake Animation"** specifically for invalid inputs. When the form is submitted and fails, the problematic fields snap left and right quickly, providing immediate and intuitive visual feedback that complements the text error messages.
+
+* * *
 
 ## Icon Credits
 
 Brand icons (GitHub, LinkedIn) are inline SVGs sourced from **[Simple Icons](https://simpleicons.org/)** — a free, open-source project that provides standardised SVG paths for thousands of brand logos. The paths are embedded directly in the HTML rather than loaded as separate image files, which means zero extra network requests and they scale perfectly at any resolution. They use `fill="currentColor"` so they automatically inherit the text color set by CSS, including on hover and theme changes.
 
----
+* * *
 
 ## Codepen References
 
 These codepens directly inspired or informed specific implementations:
-1. https://codepen.io/santoshban/pen/pvjqqNK — visual inspiration
-2. https://codepen.io/rtredes2/pen/QwbNadM — visual inspiration
-3. https://codepen.io/milanraring/pen/gOwGpdm — magnetic button effect (the `getBoundingClientRect()` + fractional translate pattern used for nav links and filter buttons)
-4. https://codepen.io/arsallanShahab/pen/jOWeBaE — 3D card perspective tilt (the manual `rotateX`/`rotateY` calculation used for project cards and modals)
-5. https://codepen.io/cssparadise/pen/LYVybWL — spring effect of modals
 
----
+1.  [https://codepen.io/santoshban/pen/pvjqqNK](https://codepen.io/santoshban/pen/pvjqqNK) — visual inspiration
+2.  [https://codepen.io/rtredes2/pen/QwbNadM](https://codepen.io/rtredes2/pen/QwbNadM) — visual inspiration
+3.  [https://codepen.io/milanraring/pen/gOwGpdm](https://codepen.io/milanraring/pen/gOwGpdm) — magnetic button effect (the `getBoundingClientRect()` + fractional translate pattern used for nav links and filter buttons)
+4.  [https://codepen.io/arsallanShahab/pen/jOWeBaE](https://codepen.io/arsallanShahab/pen/jOWeBaE) — 3D card perspective tilt (the manual `rotateX`/`rotateY` calculation used for project cards and modals)
+5.  [https://codepen.io/cssparadise/pen/LYVybWL](https://codepen.io/cssparadise/pen/LYVybWL) — spring effect of modals
+
+* * *

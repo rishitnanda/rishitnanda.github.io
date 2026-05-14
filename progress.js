@@ -20,12 +20,14 @@ export class ReadingProgress {
         // Update bar width
         this.bar.style.width = `${pct}%`;
         
-        // Save position in sessionStorage
-        sessionStorage.setItem('reading-pos', window.scrollY);
+        // Save position in sessionStorage (unique per page)
+        const pageKey = `reading-pos-${window.location.pathname}`;
+        sessionStorage.setItem(pageKey, window.scrollY);
     }
 
     checkPersistence() {
-        const pos = sessionStorage.getItem('reading-pos');
+        const pageKey = `reading-pos-${window.location.pathname}`;
+        const pos = sessionStorage.getItem(pageKey);
         
         // Prompt to resume if scrolled significantly
         const isExcludedPage = window.location.pathname.endsWith('index.html') || 
@@ -62,7 +64,7 @@ export class ReadingProgress {
 
             // Decline resume
             document.getElementById('resume-no').addEventListener('click', () => {
-                sessionStorage.removeItem('reading-pos');
+                sessionStorage.removeItem(pageKey);
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 500);
             });

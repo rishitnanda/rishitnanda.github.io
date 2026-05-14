@@ -1,389 +1,391 @@
-const themeToggle = document.querySelector('#theme-toggle');
+export function initMain() {
+    const themeToggle = document.querySelector('#theme-toggle');
 
-// Toggle theme and remember in localStorage
-if (themeToggle) {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    themeToggle.checked = currentTheme === 'dark';
+    // Toggle theme and remember in localStorage
+    if (themeToggle) {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        themeToggle.checked = currentTheme === 'dark';
 
-    themeToggle.addEventListener('change', (e) => {
-        const theme = e.target.checked ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+        themeToggle.addEventListener('change', (e) => {
+            const theme = e.target.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
 
-        // Add surge animation
-        const switchLabel = themeToggle.closest('.switch');
-        if (switchLabel) {
-            switchLabel.classList.remove('switch-surge');
-            void switchLabel.offsetWidth; // Trigger reflow
-            switchLabel.classList.add('switch-surge');
-        }
-    });
-}
-
-
-// Generic keyboard support for custom focusable elements (Enter/Space to click)
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-        const target = e.target.closest('[tabindex="0"]');
-        if (target) {
-            // Only trigger if the target itself is focused (not an input inside it)
-            if (document.activeElement === target) {
-                if (e.key === ' ') e.preventDefault(); // Prevent scrolling
-                target.click();
+            // Add surge animation
+            const switchLabel = themeToggle.closest('.switch');
+            if (switchLabel) {
+                switchLabel.classList.remove('switch-surge');
+                void switchLabel.offsetWidth; // Trigger reflow
+                switchLabel.classList.add('switch-surge');
             }
-        }
+        });
     }
-});
 
 
-const timelineList = document.querySelector('.timeline-list');
-
-// Generic 3D Tilt Effect
-function applyTilt(elements, perspective = 1000, intensity = 8, scale = 1) {
-    const targets = (elements instanceof NodeList || Array.isArray(elements)) ? elements : [elements];
-    targets.forEach(el => {
-        el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -intensity;
-            const rotateY = ((x - centerX) / centerX) * intensity;
-
-            el.style.transform = `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-            el.style.transition = 'transform 0.1s ease-out';
-        });
-
-        el.addEventListener('mouseleave', () => {
-            el.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale(1)`;
-            el.style.transition = 'var(--transition-main)';
-        });
-    });
-}
-
-// Use event delegation for timeline expansion
-if (timelineList) {
-    timelineList.addEventListener('click', (event) => {
-        const clickedCard = event.target.closest('.timeline-card');
-        if (!clickedCard) return;
-
-        const isExpanded = clickedCard.getAttribute('aria-expanded') === 'true';
-        clickedCard.setAttribute('aria-expanded', !isExpanded);
-        
-        // Update aria-label for screen readers to reflect new state
-        clickedCard.setAttribute('aria-label', !isExpanded ? 'Timeline event expanded' : 'Timeline event collapsed');
-
-        const clickedItem = clickedCard.closest('.timeline-item');
-
-        // Inject image inline on mobile when expanded
-        if (window.matchMedia('(max-width: 1023px)').matches) {
-            const content = clickedItem.querySelector('.timeline-content');
-            const img = content.querySelector('.timeline-inline-img');
-
-            if (!isExpanded) {
-                if (!img) {
-                    const cards = timelineList.querySelectorAll('.timeline-card');
-                    const card = clickedItem.querySelector('.timeline-card');
-                    const index = Array.from(cards).indexOf(card);
-                    const newImg = document.createElement('img');
-                    newImg.src = `images/timeline_entry_${index + 1}.jpg`;
-                    newImg.alt = 'Timeline memory';
-                    newImg.className = 'timeline-inline-img';
-                    content.appendChild(newImg);
+    // Generic keyboard support for custom focusable elements (Enter/Space to click)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const target = e.target.closest('[tabindex="0"]');
+            if (target) {
+                // Only trigger if the target itself is focused (not an input inside it)
+                if (document.activeElement === target) {
+                    if (e.key === ' ') e.preventDefault(); // Prevent scrolling
+                    target.click();
                 }
-            } else if (img) {
-                img.remove();
             }
         }
     });
-}
 
 
-const tagFilterButtons = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card:not(#project-modal .project-card)');
+    const timelineList = document.querySelector('.timeline-list');
 
-if (tagFilterButtons.length > 0) {
-    const urlParams = new URLSearchParams(window.location.search);
-    let activeFilters = urlParams.get('tags') ? urlParams.get('tags').split(',') : ['all'];
+    // Generic 3D Tilt Effect
+    function applyTilt(elements, perspective = 1000, intensity = 8, scale = 1) {
+        const targets = (elements instanceof NodeList || Array.isArray(elements)) ? elements : [elements];
+        targets.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
 
-    // Update visibility based on active filters
-    function renderFilters() {
-        tagFilterButtons.forEach(btn => {
-            const val = btn.getAttribute('data-filter');
-            const isActive = activeFilters.includes(val) || (activeFilters.includes('all') && val === 'all');
-            btn.classList.toggle('active', isActive);
-            btn.setAttribute('aria-pressed', isActive);
+                const rotateX = ((y - centerY) / centerY) * -intensity;
+                const rotateY = ((x - centerX) / centerX) * intensity;
+
+                el.style.transform = `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+                el.style.transition = 'transform 0.1s ease-out';
+            });
+
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale(1)`;
+                el.style.transition = 'var(--transition-main)';
+            });
         });
+    }
 
-        projectCards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            const match = activeFilters.includes('all') || activeFilters.some(tag => category.includes(tag));
+    // Use event delegation for timeline expansion
+    if (timelineList) {
+        timelineList.addEventListener('click', (event) => {
+            const clickedCard = event.target.closest('.timeline-card');
+            if (!clickedCard) return;
 
-            if (match) {
-                card.style.display = 'flex';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 10);
-            } else {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => card.style.display = 'none', 400);
+            const isExpanded = clickedCard.getAttribute('aria-expanded') === 'true';
+            clickedCard.setAttribute('aria-expanded', !isExpanded);
+            
+            // Update aria-label for screen readers to reflect new state
+            clickedCard.setAttribute('aria-label', !isExpanded ? 'Timeline event expanded' : 'Timeline event collapsed');
+
+            const clickedItem = clickedCard.closest('.timeline-item');
+
+            // Inject image inline on mobile when expanded
+            if (window.matchMedia('(max-width: 1023px)').matches) {
+                const content = clickedItem.querySelector('.timeline-content');
+                const img = content.querySelector('.timeline-inline-img');
+
+                if (!isExpanded) {
+                    if (!img) {
+                        const cards = timelineList.querySelectorAll('.timeline-card');
+                        const card = clickedItem.querySelector('.timeline-card');
+                        const index = Array.from(cards).indexOf(card);
+                        const newImg = document.createElement('img');
+                        newImg.src = `images/timeline_entry_${index + 1}.jpg`;
+                        newImg.alt = 'Timeline memory';
+                        newImg.className = 'timeline-inline-img';
+                        content.appendChild(newImg);
+                    }
+                } else if (img) {
+                    img.remove();
+                }
             }
         });
     }
 
-    tagFilterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const val = button.getAttribute('data-filter');
 
-            if (val === 'all') {
-                activeFilters = ['all'];
-            } else {
-                if (activeFilters.includes('all')) activeFilters = [];
-                if (activeFilters.includes(val)) {
-                    activeFilters = activeFilters.filter(t => t !== val);
-                    if (activeFilters.length === 0) activeFilters = ['all'];
+    const tagFilterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card:not(#project-modal .project-card)');
+
+    if (tagFilterButtons.length > 0) {
+        const urlParams = new URLSearchParams(window.location.search);
+        let activeFilters = urlParams.get('tags') ? urlParams.get('tags').split(',') : ['all'];
+
+        // Update visibility based on active filters
+        function renderFilters() {
+            tagFilterButtons.forEach(btn => {
+                const val = btn.getAttribute('data-filter');
+                const isActive = activeFilters.includes(val) || (activeFilters.includes('all') && val === 'all');
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive);
+            });
+
+            projectCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const match = activeFilters.includes('all') || activeFilters.some(tag => category.includes(tag));
+
+                if (match) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
                 } else {
-                    activeFilters.push(val);
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => card.style.display = 'none', 400);
                 }
-            }
+            });
+        }
 
-            const url = new URL(window.location);
-            if (activeFilters.includes('all')) {
-                url.searchParams.delete('tags');
-            } else {
-                url.searchParams.set('tags', activeFilters.join(','));
-            }
-            window.history.pushState({}, '', url);
+        tagFilterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const val = button.getAttribute('data-filter');
+
+                if (val === 'all') {
+                    activeFilters = ['all'];
+                } else {
+                    if (activeFilters.includes('all')) activeFilters = [];
+                    if (activeFilters.includes(val)) {
+                        activeFilters = activeFilters.filter(t => t !== val);
+                        if (activeFilters.length === 0) activeFilters = ['all'];
+                    } else {
+                        activeFilters.push(val);
+                    }
+                }
+
+                const url = new URL(window.location);
+                if (activeFilters.includes('all')) {
+                    url.searchParams.delete('tags');
+                } else {
+                    url.searchParams.set('tags', activeFilters.join(','));
+                }
+                window.history.pushState({}, '', url);
+                renderFilters();
+            });
+        });
+
+        renderFilters();
+
+        // Sync filters with browser history, without this if u put filters on projects and press browser back and forward buttons, the filter selection would stay same but url would be changing
+        window.addEventListener('popstate', () => {
+            const historyParams = new URLSearchParams(window.location.search);
+            activeFilters = historyParams.get('tags') ? historyParams.get('tags').split(',') : ['all'];
             renderFilters();
         });
-    });
+    }
 
-    renderFilters();
+    // contact form on contact page
+    const contactFormNode = document.getElementById('contact-form');
 
-    // Sync filters with browser history, without this if u put filters on projects and press browser back and forward buttons, the filter selection would stay same but url would be changing
-    window.addEventListener('popstate', () => {
-        const historyParams = new URLSearchParams(window.location.search);
-        activeFilters = historyParams.get('tags') ? historyParams.get('tags').split(',') : ['all'];
-        renderFilters();
-    });
-}
+    if (contactFormNode) {
+        contactFormNode.addEventListener('submit', (event) => {
+            event.preventDefault();
 
-// contact form on contact page
-const contactFormNode = document.getElementById('contact-form');
+            const errorNode = contactFormNode.querySelector('.error-msg');
+            if (errorNode) errorNode.style.display = 'none';
 
-if (contactFormNode) {
-    contactFormNode.addEventListener('submit', (event) => {
-        event.preventDefault();
+            if (contactFormNode.checkValidity()) {
+                contactFormNode.style.opacity = '0';
+                setTimeout(() => {
+                    contactFormNode.style.display = 'none';
+                    const success = document.getElementById('form-success');
+                    if (success) {
+                        success.style.display = 'block';
+                        success.classList.add('hero-animate');
+                    }
+                }, 400);
+            } else {
+                // Validation error messages
+                const name = document.getElementById('name');
+                const email = document.getElementById('email');
+                const message = document.getElementById('message');
 
-        const errorNode = contactFormNode.querySelector('.error-msg');
-        if (errorNode) errorNode.style.display = 'none';
+                let error = "> ERR: INVALID_PAYLOAD";
 
-        if (contactFormNode.checkValidity()) {
-            contactFormNode.style.opacity = '0';
-            setTimeout(() => {
-                contactFormNode.style.display = 'none';
-                const success = document.getElementById('form-success');
-                if (success) {
-                    success.style.display = 'block';
-                    success.classList.add('hero-animate');
+                if (name && !name.validity.valid) error = "> ERR: IDENTIFICATION TOO SHORT (MIN 4 CHARS)";
+                else if (email && !email.validity.valid) error = "> ERR: INVALID_SECURE_CHANNEL (CHECK TYPE)";
+                else if (message && !message.validity.valid) error = "> ERR: PAYLOAD_TOO_SHORT (MIN 3 CHARS)";
+
+                if (errorNode) {
+                    errorNode.innerText = error;
+                    errorNode.style.display = 'block';
                 }
-            }, 400);
-        } else {
-            // Validation error messages
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const message = document.getElementById('message');
-
-            let error = "> ERR: INVALID_PAYLOAD";
-
-            if (name && !name.validity.valid) error = "> ERR: IDENTIFICATION TOO SHORT (MIN 4 CHARS)";
-            else if (email && !email.validity.valid) error = "> ERR: INVALID_SECURE_CHANNEL (CHECK TYPE)";
-            else if (message && !message.validity.valid) error = "> ERR: PAYLOAD_TOO_SHORT (MIN 3 CHARS)";
-
-            if (errorNode) {
-                errorNode.innerText = error;
-                errorNode.style.display = 'block';
+                contactFormNode.classList.add('was-validated');
             }
-            contactFormNode.classList.add('was-validated');
+        });
+    }
+
+
+    // Intersection observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                entry.target.style.transitionDelay = `${index * 100}ms`;
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.style.transitionDelay = '0ms';
+                entry.target.classList.remove('in-view');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+    document.querySelectorAll('.scroll-animate, .timeline-item').forEach(node => observer.observe(node));
+
+    // picking data from small project card's attributes and printing them in the larg card mode
+    const projectModalWindow = document.getElementById('project-modal');
+    const projectModalCloseBtn = document.getElementById('close-modal');
+
+    let lastFocusedElement;
+
+    if (projectModalWindow && projectModalCloseBtn) {
+        projectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('h3').innerText;
+                const tag = card.querySelector('.project-tag').innerText;
+                const brief = card.querySelector('p').innerText;
+
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-tag').innerText = tag;
+                document.getElementById('modal-brief').innerText = brief;
+                document.getElementById('modal-full').innerText = card.getAttribute('data-full');
+                document.getElementById('modal-origin').innerText = card.getAttribute('data-origin');
+                document.getElementById('modal-evolution').innerText = card.getAttribute('data-evolution');
+                document.getElementById('modal-tradeoffs').innerText = card.getAttribute('data-tradeoffs');
+
+                lastFocusedElement = document.activeElement;
+                projectModalWindow.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                projectModalCloseBtn.focus();
+            });
+        });
+
+        // Apply 3D tilt effect to project cards and modal windows
+        // Higher perspective values feel "flatter", lower values intensify the 3D depth
+        applyTilt(projectCards, 1000, 8, 1.02);
+        applyTilt(document.querySelectorAll('.modal-content'), 2000, 10, 1);
+
+        function closeModal() {
+            projectModalWindow.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            if (lastFocusedElement) lastFocusedElement.focus();
         }
-    });
-}
+
+        projectModalCloseBtn.addEventListener('click', closeModal);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === projectModalWindow) {
+                closeModal();
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && projectModalWindow.style.display === 'flex') {
+                closeModal();
+            }
+        });
+    }
 
 
-// Intersection observer for fade-in animations
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            entry.target.style.transitionDelay = `${index * 100}ms`;
-            entry.target.classList.add('in-view');
-        } else {
-            entry.target.style.transitionDelay = '0ms';
-            entry.target.classList.remove('in-view');
-        }
-    });
-}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    // Timeline image hover display
+    const isMobile = () => window.matchMedia('(max-width: 1023px)').matches;
 
-document.querySelectorAll('.scroll-animate, .timeline-item').forEach(node => observer.observe(node));
+    document.querySelectorAll('.timeline-card').forEach((card, index) => {
+        card.addEventListener('mouseenter', () => {
+            if (isMobile()) return;
+            const display = document.getElementById('timeline-hover-display');
+            const img = document.getElementById('timeline-img');
+            if (display && img) {
+                img.src = `images/timeline_entry_${index + 1}.jpg`;
+                display.style.opacity = '1';
+            }
+        });
 
-// picking data from small project card's attributes and printing them in the larg card mode
-const projectModalWindow = document.getElementById('project-modal');
-const projectModalCloseBtn = document.getElementById('close-modal');
-
-let lastFocusedElement;
-
-if (projectModalWindow && projectModalCloseBtn) {
-    projectCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const title = card.querySelector('h3').innerText;
-            const tag = card.querySelector('.project-tag').innerText;
-            const brief = card.querySelector('p').innerText;
-
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-tag').innerText = tag;
-            document.getElementById('modal-brief').innerText = brief;
-            document.getElementById('modal-full').innerText = card.getAttribute('data-full');
-            document.getElementById('modal-origin').innerText = card.getAttribute('data-origin');
-            document.getElementById('modal-evolution').innerText = card.getAttribute('data-evolution');
-            document.getElementById('modal-tradeoffs').innerText = card.getAttribute('data-tradeoffs');
-
-            lastFocusedElement = document.activeElement;
-            projectModalWindow.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            projectModalCloseBtn.focus();
+        card.addEventListener('mouseleave', () => {
+            if (isMobile()) return;
+            const display = document.getElementById('timeline-hover-display');
+            if (display) display.style.opacity = '0';
         });
     });
 
-    // Apply 3D tilt effect to project cards and modal windows
-    // Higher perspective values feel "flatter", lower values intensify the 3D depth
-    applyTilt(projectCards, 1000, 8, 1.02);
-    applyTilt(document.querySelectorAll('.modal-content'), 2000, 10, 1);
 
-    function closeModal() {
-        projectModalWindow.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        if (lastFocusedElement) lastFocusedElement.focus();
-    }
+    const display = document.querySelector('.typewriter-text');
+    const phrases = [
+        '> 0x1337 Enthusiast',
+        '> Initializing System_Daemon()',
+        '> Memory Access Granted',
+        '> True Pythonista'
+    ];
 
-    projectModalCloseBtn.addEventListener('click', closeModal);
+    let phraseIdx = 0;
+    let charIdx = 2;
+    let chars = ['>', ' '];
+    let isDeleting = false;
 
-    window.addEventListener('click', (e) => {
-        if (e.target === projectModalWindow) {
-            closeModal();
-        }
-    });
+    // Typewriter effect
+    function type() {
+        if (!display) return;
 
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && projectModalWindow.style.display === 'flex') {
-            closeModal();
-        }
-    });
-}
+        const text = phrases[phraseIdx];
+        // Dynamic typing speeds: slower typing (human-like), faster deleting
+        let nextSpeed = isDeleting ? 45 : 100;
 
-
-// Timeline image hover display
-const isMobile = () => window.matchMedia('(max-width: 1023px)').matches;
-
-document.querySelectorAll('.timeline-card').forEach((card, index) => {
-    card.addEventListener('mouseenter', () => {
-        if (isMobile()) return;
-        const display = document.getElementById('timeline-hover-display');
-        const img = document.getElementById('timeline-img');
-        if (display && img) {
-            img.src = `images/timeline_entry_${index + 1}.jpg`;
-            display.style.opacity = '1';
-        }
-    });
-
-    card.addEventListener('mouseleave', () => {
-        if (isMobile()) return;
-        const display = document.getElementById('timeline-hover-display');
-        if (display) display.style.opacity = '0';
-    });
-});
-
-
-const display = document.querySelector('.typewriter-text');
-const phrases = [
-    '> 0x1337 Enthusiast',
-    '> Initializing System_Daemon()',
-    '> Memory Access Granted',
-    '> True Pythonista'
-];
-
-let phraseIdx = 0;
-let charIdx = 2;
-let chars = ['>', ' '];
-let isDeleting = false;
-
-// Typewriter effect
-function type() {
-    if (!display) return;
-
-    const text = phrases[phraseIdx];
-    // Dynamic typing speeds: slower typing (human-like), faster deleting
-    let nextSpeed = isDeleting ? 45 : 100;
-
-    if (!isDeleting) {
-        if (charIdx < text.length) {
-            chars.push(text[charIdx]);
-            charIdx++;
-            display.innerHTML = chars.join('');
+        if (!isDeleting) {
+            if (charIdx < text.length) {
+                chars.push(text[charIdx]);
+                charIdx++;
+                display.innerHTML = chars.join('');
+            } else {
+                // Reached end: wait then start deleting
+                isDeleting = true;
+                nextSpeed = 2000;
+            }
         } else {
-            // Reached end: wait then start deleting
-            isDeleting = true;
-            nextSpeed = 2000;
+            if (charIdx > 2) {
+                chars.pop();
+                charIdx--;
+                display.innerHTML = chars.join('');
+            } else {
+                // Finished deleting: move to next phrase
+                isDeleting = false;
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                nextSpeed = 500;
+            }
         }
-    } else {
-        if (charIdx > 2) {
-            chars.pop();
-            charIdx--;
-            display.innerHTML = chars.join('');
-        } else {
-            // Finished deleting: move to next phrase
-            isDeleting = false;
-            phraseIdx = (phraseIdx + 1) % phrases.length;
-            nextSpeed = 500;
+
+        setTimeout(type, nextSpeed);
+    }
+
+    if (display) setTimeout(type, 800);
+
+
+    // Magnetic button effect
+    const magneticButtons = document.querySelectorAll('.nav-links a, .filter-btn, .magnetic-btn');
+
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = `translate(0px, 0px) scale(1)`;
+        });
+    });
+
+
+    // Reduced Motion system preference handler
+    const hudStatus = document.querySelector('.hud-right');
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function updateMotionStatus() {
+        if (hudStatus) {
+            const isReduced = motionQuery.matches;
+            hudStatus.innerHTML = `STATUS // SECURE<br>REDUCED MOTION: ${isReduced ? 'ON' : 'OFF'}`;
         }
     }
 
-    setTimeout(type, nextSpeed);
+    // Initialize and listen for changes
+    updateMotionStatus();
+    motionQuery.addEventListener('change', updateMotionStatus);
 }
-
-if (display) setTimeout(type, 800);
-
-
-// Magnetic button effect
-const magneticButtons = document.querySelectorAll('.nav-links a, .filter-btn, .magnetic-btn');
-
-magneticButtons.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
-    });
-
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = `translate(0px, 0px) scale(1)`;
-    });
-});
-
-
-// Reduced Motion system preference handler
-const hudStatus = document.querySelector('.hud-right');
-const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-function updateMotionStatus() {
-    if (hudStatus) {
-        const isReduced = motionQuery.matches;
-        hudStatus.innerHTML = `STATUS // SECURE<br>REDUCED MOTION: ${isReduced ? 'ON' : 'OFF'}`;
-    }
-}
-
-// Initialize and listen for changes
-updateMotionStatus();
-motionQuery.addEventListener('change', updateMotionStatus);
