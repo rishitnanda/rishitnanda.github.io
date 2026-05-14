@@ -8,7 +8,7 @@ export class BackgroundEffect {
         this.screenHeight = 0;
         this.activeParticles = [];
         
-        this.PARTICLE_RENDER_LIMIT = 40; // Toned down from 80
+        this.PARTICLE_RENDER_LIMIT = 80;
         this.CONNECTION_LINK_THRESHOLD = 150;
         this.GRAVITY_WELL_RADIUS = 250;
         this.BASE_VELOCITY_SPEED = 0.5;

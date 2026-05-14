@@ -177,22 +177,63 @@ export function initMain() {
     const contactFormNode = document.getElementById('contact-form');
 
     if (contactFormNode) {
-        contactFormNode.addEventListener('submit', (event) => {
+        contactFormNode.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const errorNode = contactFormNode.querySelector('.error-msg');
+            const submitBtn = contactFormNode.querySelector('button[type="submit"]');
+            
             if (errorNode) errorNode.style.display = 'none';
 
             if (contactFormNode.checkValidity()) {
-                contactFormNode.style.opacity = '0';
-                setTimeout(() => {
-                    contactFormNode.style.display = 'none';
-                    const success = document.getElementById('form-success');
-                    if (success) {
-                        success.style.display = 'block';
-                        success.classList.add('hero-animate');
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+
+                if (submitBtn) {
+                    submitBtn.innerText = '[ TRANSMITTING... ]';
+                    submitBtn.disabled = true;
+                }
+
+                try {
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ 
+                            access_key: "f5c41bf9-2498-4b57-85ef-0993fab462eb", // Replace with your Web3Forms access key
+                            name: name, 
+                            email: email, 
+                            message: message 
+                        })
+                    });
+
+                    if (response.ok) {
+                        contactFormNode.style.opacity = '0';
+                        setTimeout(() => {
+                            contactFormNode.style.display = 'none';
+                            const success = document.getElementById('form-success');
+                            if (success) {
+                                success.style.display = 'block';
+                                success.classList.add('hero-animate');
+                            }
+                        }, 400);
+                    } else {
+                        const data = await response.json();
+                        throw new Error(data.message || '> ERR: TRANSMISSION_FAILED');
                     }
-                }, 400);
+                } catch (err) {
+                    if (errorNode) {
+                        errorNode.innerText = err.message || '> ERR: TRANSMISSION_FAILED';
+                        errorNode.style.display = 'block';
+                    }
+                    if (submitBtn) {
+                        submitBtn.innerText = '[ TRANSMIT ]';
+                        submitBtn.disabled = false;
+                    }
+                }
             } else {
                 // Validation error messages
                 const name = document.getElementById('name');
