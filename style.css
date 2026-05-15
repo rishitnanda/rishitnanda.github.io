@@ -1185,7 +1185,7 @@ textarea:focus {
     width: 100%;
     height: 75vh;
     max-height: 800px;
-    min-height: 600px;
+    min-height: 400px;
     overflow-y: hidden;
     display: flex;
     flex-direction: column;
@@ -1194,6 +1194,13 @@ textarea:focus {
     padding: 1.5rem !important;
     background: var(--bg-color);
     border-radius: var(--radius);
+}
+
+/* Scrollable modal body */
+.modal-scroll-body {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 10px;
 }
 
 #close-modal {
@@ -1467,4 +1474,212 @@ body:has(form) .modular-grid {
     #timeline-hover-display {
         display: none !important;
     }
+}
+
+/* Brutalism Styles (Blended) */
+.brutalist {
+    --radius: 0px;
+}
+
+.brutalist .timeline-card,
+.brutalist .about-image img {
+    border: 3px solid var(--text-color);
+    box-shadow: 8px 8px 0px var(--accent-color);
+    background: var(--bg-color);
+    backdrop-filter: none;
+    transition: all 0.2s ease;
+}
+
+.brutalist .timeline-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px var(--accent-color);
+}
+
+.brutalist h1, .brutalist h2, .brutalist h3 {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 4px 4px 0px rgba(106, 27, 154, 0.3);
+}
+
+/* Brutalism on project cards */
+.brutalist .project-card {
+    border: 3px solid var(--text-color);
+    box-shadow: 6px 6px 0px var(--accent-color);
+    backdrop-filter: none;
+    background: var(--bg-color);
+}
+
+.brutalist .project-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* Brutalism on form elements */
+.brutalist .cyber-console {
+    clip-path: none;
+    border: 3px solid var(--text-color);
+    box-shadow: 8px 8px 0px var(--accent-color);
+    backdrop-filter: none;
+}
+
+.brutalist .cyber-btn {
+    clip-path: none;
+    border: 2px solid var(--text-color);
+    box-shadow: 4px 4px 0px var(--text-color);
+    transition: all 0.1s ease;
+}
+
+.brutalist .cyber-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--text-color);
+}
+
+.brutalist .cyber-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--text-color);
+}
+
+/* Brutalism on filter buttons */
+.brutalist .filter-btn {
+    border: 2px solid var(--text-color);
+    border-radius: 0;
+}
+
+.brutalist .filter-btn.active,
+.brutalist .filter-btn:hover {
+    box-shadow: 4px 4px 0px var(--text-color);
+    transform: translate(-2px, -2px);
+}
+
+/* Glitch Hover Effect */
+.glitch-hover:hover {
+    animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    text-shadow: 2px 2px 0 #00ffff, -2px -2px 0 #ff00ff;
+    color: var(--text-color);
+}
+
+@keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    20% { transform: skew(-2deg); }
+    40% { transform: skew(2deg); }
+    60% { transform: skew(-1deg); }
+    80% { transform: skew(1deg); }
+    100% { transform: skew(0deg); }
+}
+
+/* Terminal-style Source Buttons */
+.source-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+}
+
+.brutalist .source-btn {
+    box-shadow: 4px 4px 0px var(--accent-color);
+}
+
+.brutalist .source-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--accent-color);
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+.brutalist .source-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--accent-color);
+}
+
+.source-btn-prompt {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.source-btn-repo {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.source-btn:hover .source-btn-prompt,
+.source-btn:hover .source-btn-repo {
+    color: var(--bg-color);
+}
+
+.source-btn-arrow {
+    transition: transform 0.2s ease;
+}
+
+.source-btn:hover .source-btn-arrow {
+    transform: translateX(4px);
+}
+
+/* Modal Actions Row */
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+/* System Overlays */
+.system-overlays {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+.crt-scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 4px;
+    z-index: 1;
+    opacity: 0.15;
+    animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+.noise-grain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    z-index: 2;
+}
+
+/* HUD Glow */
+.hud {
+    text-shadow: 0 0 10px var(--accent-color);
+    animation: hudPulse 4s infinite ease-in-out;
+}
+
+@keyframes hudPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
 }

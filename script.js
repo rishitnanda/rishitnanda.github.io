@@ -291,6 +291,29 @@ export function initMain() {
                 document.getElementById('modal-origin').innerText = card.getAttribute('data-origin');
                 document.getElementById('modal-evolution').innerText = card.getAttribute('data-evolution');
                 document.getElementById('modal-tradeoffs').innerText = card.getAttribute('data-tradeoffs');
+                
+                // Render GitHub link as a creative terminal-style clone button
+                const githubLink = card.getAttribute('data-github');
+                const githubLinkContainer = document.getElementById('modal-github-link');
+                if (githubLinkContainer) {
+                    if (githubLink) {
+                        const repoName = githubLink.split('/').pop();
+                        githubLinkContainer.innerHTML = `<a href="${githubLink}" target="_blank" class="source-btn magnetic-btn" title="View on GitHub"><span class="source-btn-prompt">$</span> git clone <span class="source-btn-repo">${repoName}</span> <span class="source-btn-arrow">→</span></a>`;
+                    } else {
+                        githubLinkContainer.innerHTML = '';
+                    }
+                }
+
+                // Render Docs link
+                const docsLink = card.getAttribute('data-docs');
+                const docsLinkContainer = document.getElementById('modal-docs-link');
+                if (docsLinkContainer) {
+                    if (docsLink) {
+                        docsLinkContainer.innerHTML = `<a href="${docsLink}" target="_blank" class="source-btn docs-btn magnetic-btn" title="Read Documentation"><span class="source-btn-prompt">></span> man <span class="source-btn-repo">docs</span> <span class="source-btn-arrow">→</span></a>`;
+                    } else {
+                        docsLinkContainer.innerHTML = '';
+                    }
+                }
 
                 lastFocusedElement = document.activeElement;
                 projectModalWindow.style.display = 'flex';
@@ -429,4 +452,39 @@ export function initMain() {
     // Initialize and listen for changes
     updateMotionStatus();
     motionQuery.addEventListener('change', updateMotionStatus);
+
+    // Global System Overlays
+    const overlayContainer = document.createElement('div');
+    overlayContainer.classList.add('system-overlays');
+    overlayContainer.innerHTML = `
+        <div class="crt-scanlines"></div>
+        <div class="noise-grain"></div>
+    `;
+    document.body.appendChild(overlayContainer);
+
+    // Parallax Scrolling Logic
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        
+        // Background Parallax
+        const bgCanvas = document.getElementById('bg-canvas');
+        if (bgCanvas) {
+            bgCanvas.style.transform = `translateY(${scrolled * 0.1}px)`;
+        }
+
+        // Project Cards Parallax
+        if (projectCards && projectCards.length > 0) {
+            projectCards.forEach(card => {
+                const speed = card.getAttribute('data-speed');
+                if (speed && !isMobile()) {
+                    const yPos = -(scrolled * speed * 0.1);
+                    // Don't override tilt transform if hovered, handle carefully
+                    // Best way: wrap card content or use translateY directly on card only if not hovered
+                    if (!card.matches(':hover')) {
+                        card.style.transform = `translateY(${yPos}px)`;
+                    }
+                }
+            });
+        }
+    });
 }

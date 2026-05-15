@@ -16,7 +16,7 @@
         document.documentElement.setAttribute('data-theme', theme);
     </script>
 </head>
-<body>
+<body class="brutalist">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <canvas id="bg-canvas"></canvas>
@@ -61,55 +61,31 @@
 
 
             <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
-                data-category="games python ui_ux"
-                data-full="A personalized multi-game library system built with Python and Tkinter. It centralizes various small projects and mini-games into a single accessible dashboard, seamlessly launching individual game modules on demand."
-                data-origin="Created to aggregate scattered Python game scripts into one cohesive, polished environment instead of running them individually from the terminal."
-                data-evolution="I plan to move away from Tkinter to a more robust framework like PyQt, or convert it to an electron app, to allow for more complex game previews and system integrations."
-                data-tradeoffs="Leveraged Tkinter for zero-dependency portability and rapid interface creation, trading off modern aesthetic flexibility for outright execution speed.">
-                <span class="project-tag">#PYTHON #GAMES #GUI</span>
-                <h3>Spydr (Game Hub)</h3>
-                <p>A central dashboard launcher for various localized Python mini-games.</p>
-            </article>
-
-            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
                 data-category="ui_ux python"
-                data-full="Integrated a real-time facial recognition pipeline using the dlib-based face_recognition library. The system performs 128-dimension face encoding and compares them against a MySQL database with a 0.6 distance threshold for high-accuracy identification."
-                data-origin="Designed to bridge the gap between low-level computer vision scripts and high-level user management. I needed a secure way to visualize 'Vision' database records while handling live camera streams without frame-rate drop."
-                data-evolution="I would move the face encoding process to a separate background thread or use multiprocessing. Currently, heavy CPU tasks on the main thread can cause the CustomTkinter UI to stutter during high-resolution processing."
-                data-tradeoffs="Chose MySQL over a flat-file system like JSON for data persistence to ensure ACID compliance, and opted for CustomTkinter over standard Tkinter to achieve a modern 'Dark Mode' aesthetic consistent with system-level tools.">
-                <span class="project-tag">#UI #PYTHON</span>
-                <h3>Biometric Interface</h3>
-                <p>Modular facial recognition suite built with CustomTkinter and MySQL. Features real-time tracking, database logging, and an administrative access control layer.</p>
-            </article>            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
-                data-category="python ui_ux"
-                data-full="Uses Python's Tkinter for interface mapping and Pillow (PIL) for image manipulation. Takes precise parameters for row/column counts, x/y offsets, spacing, and background dimensions to mathematically position and join multiple disparate images onto a single blank canvas structure."
-                data-origin="Created to automate the tedious process of manually aligning, spacing, and joining data sprites or image matrices for asset creation."
-                data-evolution="Currently reliant on predefined dimensions. In the next iteration, I would implement an auto-calculation layer to determine canvas size based on input image bounds."
-                data-tradeoffs="Used Tkinter for zero-dependency rapid development over PyQT. Prioritized precise coordinate placement mapping over dynamic GUI responsiveness.">
-                <span class="project-tag">#PYTHON #TKINTER</span>
-                <h3>PNG Grid Generator</h3>
-                <p>A GUI application that precisely concatenates and spaces multiple image inputs into configured matrices.</p>
-            </article>
-            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
-                data-category="python games"
-                data-full="A robust network backend architecture managing 14 concurrent players (7v7) along with a Game Master overlay. It handles complex state machinery for various roles (Chasers, Beaters, Keepers, Seekers). Features include action cooldown trackers, interdependent event counters, momentum handling, and live chat routing within the terminal."
-                data-origin="Created to explore concurrent state management, networking, and terminal-based multiplayer architectures through a logically complex game."
-                data-evolution="Expanding from a hard-coded restricted connection limit to a dynamic lobby system with matchmaking arrays and custom game parameters."
-                data-tradeoffs="Opted for a terminal/CLI interfacing over an HTTP/Websocket Web GUI to focus strictly on resolving backend logic concurrency and complex interdependent event states.">
-                <span class="project-tag">#PYTHON #MULTIPLAYER #BACKEND</span>
-                <h3>Quidditch Server System</h3>
-                <p>A terminal-based, 14-player multiplayer backend simulating the intricate state-mechanics of Quidditch.</p>
+                data-full="Initially developed as a basic dlib script to detect faces in static images. It lacked real-time processing and a user-friendly way to manage identification records."
+                data-origin="Currently a fully integrated real-time pipeline using 128-dimension face encoding against a MySQL database. Features a dark-mode GUI for live monitoring and administrative access control."
+                data-evolution="Future plans include moving heavy encoding to background threads for sub-second latency on 4K feeds and deploying a web-based dashboard for remote node management."
+                data-tradeoffs="Optimized for local sub-second identification speed over cloud-based processing. Chose MySQL for robust ACID-compliant logging over lighter but less reliable JSON flat-files."
+                data-github="https://github.com/rishitnanda/face_recog"
+                data-docs="#"
+                data-speed="1.1">
+                <span class="project-tag">#UI #PYTHON #CV</span>
+                <h3>Adaptive CCTV System</h3>
+                <p>User-customizable face recognition suite. Real-time tracking, MySQL-backed logging, and configurable access control — all in one panel.</p>
             </article>
 
             <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
                 data-category="systems c_cpp"
-                data-full="It utilizes custom C structs and dynamically mapped linked lists (albums.c, songs.c) to maintain robust in-memory state management of tracks and albums. Includes a full command parser capable of executing CRUD operations safely."
-                data-origin="Developed as a system assignment to deliberately master explicit memory management, void pointers, scaling structs, and direct data structure manipulation in pure C."
-                data-evolution="I would incorporate persistent binary serialization (file I/O) to load and save data state instantly across execution sessions."
-                data-tradeoffs="Developed specifically for POSIX/Linux environments (WSL compatible) for native memory system mapping, sacrificing immediate Windows command-prompt compatibility for raw processing speed.">
+                data-full="Started as a simple exercise in parsing text files and manipulating C strings using standard libraries. It had limited error handling and small data limits."
+                data-origin="Now a robust music database engine built in pure C using manual memory management, custom structs, and dynamically allocated linked lists for high-speed CRUD operations."
+                data-evolution="Upcoming versions will introduce persistent binary serialization to save system state across reboots and a socket-based remote command interface."
+                data-tradeoffs="Traded cross-platform compatibility for raw Linux performance by using POSIX-specific memory mapping. Prioritized explicit memory control over high-level abstractions."
+                data-github="https://github.com/rishitnanda/c-unplugged"
+                data-docs="#"
+                data-speed="0.9">
                 <span class="project-tag">#C #CLI #LINUX</span>
                 <h3>C-Unplugged: CLI Music</h3>
-                <p>A modular music-database application backend built entirely in pure C using linked lists.</p>
+                <p>Music database engine in pure C. Linked-list state management, command parser, and manual memory control — no libraries, no shortcuts.</p>
             </article>
 
         </section>
@@ -119,28 +95,32 @@
     <div id="project-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content project-card">
             <button id="close-modal" class="modal-close-btn" aria-label="Close project details">CLOSE_X</button>
-            <div id="modal-body">
+            <div id="modal-body" class="modal-scroll-body">
                 <span class="project-tag" id="modal-tag">#TAG</span>
                 <h2 id="modal-title">PROJECT_HEADING</h2>
-                <p class="brief-desc" id="modal-brief">Brief Description (Lorem Ipsum)</p>
+                <p class="brief-desc" id="modal-brief">Brief Description</p>
 
                 <div class="modal-grid">
                     <section>
-                        <h4>TECHNICAL_LOG</h4>
-                        <p id="modal-full">Big Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h4>PROJECT_LEGACY</h4>
+                        <p id="modal-full"></p>
                     </section>
                     <section>
-                        <h4>ORIGIN_STORY</h4>
-                        <p id="modal-origin">Why I built it: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                        <h4>CURRENT_STATE</h4>
+                        <p id="modal-origin"></p>
                     </section>
                     <section>
-                        <h4>SYSTEM_EVOLUTION</h4>
-                        <p id="modal-evolution">What I would do differently: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+                        <h4>ROADMAP</h4>
+                        <p id="modal-evolution"></p>
                     </section>
                     <section>
                         <h4>TECH_TRADEOFFS</h4>
-                        <p id="modal-tradeoffs">Tradeoffs: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+                        <p id="modal-tradeoffs"></p>
                     </section>
+                </div>
+                <div class="modal-actions">
+                    <div id="modal-github-link"></div>
+                    <div id="modal-docs-link"></div>
                 </div>
             </div>
         </div>
