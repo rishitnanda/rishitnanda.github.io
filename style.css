@@ -455,28 +455,16 @@ body:has(#contact-form) .container {
     height: 100%;
 }
 
-/* vertical accent bar on the left of the card */
-.project-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--accent-color);
-    transform: scaleY(0);
-    transition: var(--transition-main);
-}
 
 .project-card:hover {
     border-color: var(--accent-color);
     box-shadow: 0 10px 30px var(--glow-color);
 }
 
-/* vertical accent bar is disabled normally, but scaleY(1) opens it to full length on hovering */
-.project-card:hover::before,
-.project-card:focus-within::before {
-    transform: scaleY(1);
+/* border-color change on hover is already defined, removing the scaleY logic */
+.project-card:hover,
+.project-card:focus-within {
+    border-width: 2px;
 }
 
 .project-card:focus-visible,
@@ -1299,10 +1287,6 @@ textarea:focus {
 /* after is generally used if there is some text inside the original component but since there is not, this element appears as the only content in that component */
 .status-indicator::after {
     content: "STATUS: ACTIVE";
-}
-
-.status-indicator:hover::after {
-    content: "STATUS: SINGLE";
     text-shadow: 0 0 10px var(--accent-color);
 }
 
@@ -1478,78 +1462,72 @@ body:has(form) .modular-grid {
 
 /* Brutalism Styles (Blended) */
 .brutalist {
-    --radius: 0px;
+    /* Keeping default radius for a cleaner look */
 }
 
 .brutalist .timeline-card,
 .brutalist .about-image img {
-    border: 3px solid var(--text-color);
-    box-shadow: 8px 8px 0px var(--accent-color);
-    background: var(--bg-color);
-    backdrop-filter: none;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-soft);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
     transition: all 0.2s ease;
 }
 
 .brutalist .timeline-card:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 12px 12px 0px var(--accent-color);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px var(--glow-color);
 }
 
 .brutalist h1, .brutalist h2, .brutalist h3 {
     text-transform: uppercase;
-    letter-spacing: 4px;
-    text-shadow: 4px 4px 0px rgba(106, 27, 154, 0.3);
+    letter-spacing: 2px;
+    text-shadow: none;
 }
 
 /* Brutalism on project cards */
 .brutalist .project-card {
-    border: 3px solid var(--text-color);
-    box-shadow: 6px 6px 0px var(--accent-color);
-    backdrop-filter: none;
-    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-soft);
 }
 
 .brutalist .project-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 9px 9px 0px var(--accent-color);
+    transform: translateY(-5px);
     border-color: var(--accent-color);
+    box-shadow: 0 10px 30px var(--glow-color);
 }
 
 /* Brutalism on form elements */
 .brutalist .cyber-console {
-    clip-path: none;
-    border: 3px solid var(--text-color);
-    box-shadow: 8px 8px 0px var(--accent-color);
-    backdrop-filter: none;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 10px 40px var(--shadow-soft);
 }
 
 .brutalist .cyber-btn {
-    clip-path: none;
-    border: 2px solid var(--text-color);
-    box-shadow: 4px 4px 0px var(--text-color);
-    transition: all 0.1s ease;
+    border: none;
+    box-shadow: 0 4px 15px var(--glow-color);
 }
 
 .brutalist .cyber-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--text-color);
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px var(--glow-color);
 }
 
 .brutalist .cyber-btn:active {
-    transform: translate(2px, 2px);
-    box-shadow: 0px 0px 0px var(--text-color);
+    transform: scale(0.98);
 }
 
 /* Brutalism on filter buttons */
 .brutalist .filter-btn {
-    border: 2px solid var(--text-color);
-    border-radius: 0;
+    border: 2px solid var(--border-color);
 }
 
 .brutalist .filter-btn.active,
 .brutalist .filter-btn:hover {
-    box-shadow: 4px 4px 0px var(--text-color);
-    transform: translate(-2px, -2px);
+    background: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--glow-color);
+    transform: translateY(-2px);
 }
 
 /* Glitch Hover Effect */
@@ -1585,19 +1563,18 @@ body:has(form) .modular-grid {
 }
 
 .brutalist .source-btn {
-    box-shadow: 4px 4px 0px var(--accent-color);
+    box-shadow: 0 2px 8px var(--shadow-soft);
 }
 
 .brutalist .source-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--glow-color);
     background: var(--accent-color);
     color: var(--bg-color);
 }
 
 .brutalist .source-btn:active {
-    transform: translate(2px, 2px);
-    box-shadow: 0px 0px 0px var(--accent-color);
+    transform: translateY(0);
 }
 
 .source-btn-prompt {
