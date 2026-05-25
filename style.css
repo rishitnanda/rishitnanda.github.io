@@ -889,6 +889,10 @@ input:checked+.slider:after {
         padding: 1rem !important;
     }
 
+    .modal-scroll-body {
+        overflow: visible !important;
+    }
+
     .modal-grid {
         grid-template-columns: 1fr !important;
         gap: 1rem !important;
@@ -1186,9 +1190,10 @@ textarea:focus {
 
 /* Scrollable modal body */
 .modal-scroll-body {
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
-    padding-right: 10px;
+    overflow: hidden;
 }
 
 #close-modal {

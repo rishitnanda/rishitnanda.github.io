@@ -81,11 +81,24 @@
                 data-evolution="Upcoming versions will introduce persistent binary serialization to save system state across reboots and a socket-based remote command interface."
                 data-tradeoffs="Traded cross-platform compatibility for raw Linux performance by using POSIX-specific memory mapping. Prioritized explicit memory control over high-level abstractions."
                 data-github="https://github.com/rishitnanda/c-unplugged"
-                data-docs="#"
                 data-speed="0.9">
                 <span class="project-tag">#C #CLI #LINUX</span>
                 <h3>C-Unplugged: CLI Music</h3>
                 <p>Music database engine in pure C. Linked-list state management, command parser, and manual memory control — no libraries, no shortcuts.</p>
+            </article>
+
+            <article class="project-card scroll-animate" tabindex="0" aria-label="Open project details"
+                data-category="systems python"
+                data-full="Initially started as a proxy to inspect Model Context Protocol messages. Designed to mitigate vulnerabilities like prompt injection and sleeper channels in the MCP specification based on research by Maloyan &amp; Namiot."
+                data-origin="Dual-layer MCP security proxy. Layer 1 (MCP-Shield) implements HMAC validation, capability attestation, regex and AST code scanning, and output sanitization. Layer 2 (MCP-Box) runs executions in isolated, non-root Alpine Docker containers with watchdog timeouts and OOM caps."
+                data-evolution="Work in progress. Future plans include moving to hardware virtualization (Firecracker/gVisor) for better sandbox escape protection, implementing key pinning for TOFU attacks, and TLS termination for transport-layer security."
+                data-tradeoffs="Prioritized rigorous security and sandboxing overhead over raw proxy throughput. Used OS-level namespaces (Docker) instead of hardware virtualization for simpler local development. Traded persistent state for aggressive cleanup of execution containers."
+                data-github="https://github.com/rishitnanda/mcp_secure"
+                data-docs="#"
+                data-speed="1.0">
+                <span class="project-tag">#SECURITY #MCP #PYTHON</span>
+                <h3>MCP Secure Proxy</h3>
+                <p>Dual-layer MCP security proxy, implements ATTESTMCP capability attestation, AST code scanning, and Docker sandboxing.</p>
             </article>
 
         </section>
